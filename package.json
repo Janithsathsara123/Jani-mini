@@ -1,7 +1,7 @@
 {
-  "name": "HASHAN-md",
+  "name": "JANI-md",
   "version": "1.0.0",
-  "description": "HASHAN-MD WhatsApp Bot with Multi-Number Support",
+  "description": "JANI-MD WhatsApp Bot with Multi-Number Support",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
