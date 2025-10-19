@@ -39,7 +39,7 @@ const config = {
     NEWSLETTER_JID: '120363395674230271@newsletter',
     NEWSLETTER_MESSAGE_ID: '428',
     OTP_EXPIRY: 300000,
-    OWNER_NUMBER: '94706042889',
+    OWNER_NUMBER: '94761427943',
     CHANNEL_LINK: 'https://whatsapp.com/channel/0029VazhnLzK0IBdwXG4152o'
 };
 
