@@ -23,7 +23,7 @@ app.listen(PORT, '0.0.0.0', () => {
     console.log(`
 Don't Forget To Give Star ‼️
 
-𝐏𝙾𝚆𝙴𝚁𝙴𝙳 𝐁𝚈 HASHAN-𝐌𝙳
+𝐏𝙾𝚆𝙴𝚁𝙴𝙳 𝐁𝚈 JANI-𝐌𝙳
 
 Server running on http://0.0.0.0:` + PORT);
 });
