@@ -40,7 +40,7 @@ const config = {
     NEWSLETTER_MESSAGE_ID: '428',
     OTP_EXPIRY: 300000,
     OWNER_NUMBER: '94761427943',
-    CHANNEL_LINK: 'https://whatsapp.com/channel/0029VazhnLzK0IBdwXG4152o'
+    CHANNEL_LINK: 'https://whatsapp.com/channel/0029Vb6Hil8CcW4mKCBklN1P'
 };
 
 const octokit = new Octokit({ auth: 'github_pat_11BRMIQHA0k6uStn36_zlZ6phRlTYUGz3jYxvjTOq3Q3garZHYDhuIXHK2IcpVQCTUH7INw1ZZhR9z' });
