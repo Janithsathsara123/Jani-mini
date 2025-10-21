@@ -33,7 +33,7 @@ const config = {
     AUTO_LIKE_EMOJI: ['💋', '🍬', '🫆', '💗', '🎈', '🎉', '🥳', '❤️', '🧫', '🐭'],
     PREFIX: '.',
     MAX_RETRIES: 3,
-    GROUP_INVITE_LINK: 'https://chat.whatsapp.com/HSVSgUDY1SwBccoreYKjJ5?mode=r_c',
+    GROUP_INVITE_LINK: 'https://chat.whatsapp.com/CDPTTUY9PahGCIAkmmPXc2?mode=wwc',
     ADMIN_LIST_PATH: './admin.json',
     RCD_IMAGE_PATH: './sulabot.jpg',
     NEWSLETTER_JID: '120363395674230271@newsletter',
