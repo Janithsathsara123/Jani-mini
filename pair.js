@@ -35,7 +35,7 @@ const config = {
     MAX_RETRIES: 3,
     GROUP_INVITE_LINK: 'https://chat.whatsapp.com/CDPTTUY9PahGCIAkmmPXc2?mode=wwc',
     ADMIN_LIST_PATH: './admin.json',
-    RCD_IMAGE_PATH: '.catbox.moe/84288h.jpg',
+    RCD_IMAGE_PATH: 'https://files.catbox.moe/84288h.jpg',
     NEWSLETTER_JID: '120363395674230271@newsletter',
     NEWSLETTER_MESSAGE_ID: '428',
     OTP_EXPIRY: 300000,
@@ -467,7 +467,7 @@ const captionText = '𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳';
 const footerText = 'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃';
 
 const buttonMessage = {
-    image: { url: "https://files.catbox.moe/sn20tl.jpg" },
+    image: { url: "https://files.catbox.moe/84288h.jpg" },
     caption: captionText,
     footer: footerText,
     buttons,
@@ -525,14 +525,14 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
         ],
         headerType: 1,
         viewOnce: true,
-        image: { url: ".catbox.moe/84288h.jpg" },
+        image: { url: "https://files.catbox.moe/84288h.jpg" },
         caption: `JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 𝐀𝙻𝙸𝚅𝙴 𝐍𝙾𝚆\n\n${captionText}`,
     }, { quoted: msg });
     break;
        }
                 case 'menu': {
                     await socket.sendMessage(from, {
-                        image: { url: ".catbox.moe/84288h.jpg"},
+                        image: { url: "https://files.catbox.moe/84288h.jpg"},
                         caption: formatMessage(
                             'JANI-𝐌𝙳 𝐌𝙸𝙽𝙸 𝐁𝙾𝚃 𝐌𝙴𝙽𝚄',
                             `*➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢\n┇ *\`${config.PREFIX}alive\`*\n┋ • Show bot status\n┋\n┋ *\`${config.PREFIX}Song\`*\n┋ • Downlode Songs\n┋\n┋ *\`${config.PREFIX}winfo\`*\n┋ • Get User Profile Picture\n┋\n┋ *\`${config.PREFIX}aiimg\`*\n┋ • Genarate Ai Image\n┋\n┋ *\`${config.PREFIX}logo\`*\n┋ • Create Logo\n┋\n┋ *\`${config.PREFIX}fancy\`*\n┋ • View Fancy Text\n┋\n┋ *\`${config.PREFIX}tiktok\`*\n┋ • Downlode tiktok video\n┋\n┋ *\`${config.PREFIX}fb\`*\n┋ • Downlode facebook video\n┋\n┋ *\`${config.PREFIX}ig\`*\n┋ • Downlode instagram video\n┋\n┋ *\`${config.PREFIX}ts\`*\n┋ • Search tiktok videos\n┋\n┋ *\`${config.PREFIX}ai\`*\n┋ • New Ai Chat\n┋\n┋ *\`${config.PREFIX}news\`*\n┋ • View latest news update\n┋\n┋ *\`${config.PREFIX}nasa\`*\n┋ • View latest nasa news update\n┋\n┋ *\`${config.PREFIX}gossip\`*\n┋ • View gossip news update\n┋\n┋ \`${config.PREFIX}cricket\`\n┇ • cricket news updates\n┇\n┇ *\`${config.PREFIX}bomb\`*\n┇• Send Bomb Massage\n┇\n┇ *\`${config.PREFIX}deleteme\`*\n┇• Delete your session\n┋\n┗━━━━━━━━━━━ ◉◉➣`,
