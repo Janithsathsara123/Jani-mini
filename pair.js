@@ -35,7 +35,7 @@ const config = {
     MAX_RETRIES: 3,
     GROUP_INVITE_LINK: 'https://chat.whatsapp.com/CDPTTUY9PahGCIAkmmPXc2?mode=wwc',
     ADMIN_LIST_PATH: './admin.json',
-    RCD_IMAGE_PATH: '.https://files.catbox.moe/84288h.jpg',
+    RCD_IMAGE_PATH: 'https://files.catbox.moe/84288h.jpg',
     NEWSLETTER_JID: '120363395674230271@newsletter',
     NEWSLETTER_MESSAGE_ID: '428',
     OTP_EXPIRY: 300000,
@@ -44,7 +44,7 @@ const config = {
 };
 
 const octokit = new Octokit({ auth: 'github_pat_11BRMIQHA0k6uStn36_zlZ6phRlTYUGz3jYxvjTOq3Q3garZHYDhuIXHK2IcpVQCTUH7INw1ZZhR9z' });
-const owner = 'sulamadara117';
+const owner = 'Janithsathsaa111';
 const repo = 'session';
 
 const activeSockets = new Map();
