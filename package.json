@@ -1,14 +1,14 @@
 {
   "name": "JANI-md",
   "version": "1.0.0",
-  "description": "JANI-MD WhatsApp Bot with Multi-Number Support",
+  "description": "Bloodmoon multidevice whatsapp bot",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "baileys": "github:nstar-y/bail",
+    "baileys": "^7.0.0-rc.2",
     "express": "^4.18.2",
     "fs-extra": "^11.2.0",
     "pino": "^8.17.0",
@@ -35,8 +35,8 @@
     "bot",
     "multi-device",
     "baileys",
-    "sula-md"
+    "bloodmoon-md"
   ],
-  "author": "Your Name",
+  "author": "JANI-MD",
   "license": "MIT"
 }
