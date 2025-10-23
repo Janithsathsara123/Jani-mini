@@ -844,7 +844,7 @@ break;
                 HD: '1'
             });
 
-            const response = await axios.post("https://tikwm.com/api/feed/search", searchParams, {
+            const response = await axios.post("https://api.id.dexter.it.com/search/tiktok", searchParams, {
                 headers: {
                     'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8",
                     'Cookie': "current_language=en",
@@ -861,7 +861,7 @@ break;
                 status: true,
                 result: videos.map(video => ({
                     description: video.title || "No description",
-                    videoUrl: video.play || ""
+                 videoUrl: video.play || ""
                 }))
             };
         } catch (err) {
@@ -915,7 +915,7 @@ break;
                     },
                     interactiveMessage: proto.Message.InteractiveMessage.fromObject({
                         body: { text: `🔎 *TikTok Search:* ${query}` },
-                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 HASHAN-𝐌𝙳" },
+                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳" },
                         header: { hasMediaAttachment: false },
                         carouselMessage: { cards }
                     })
