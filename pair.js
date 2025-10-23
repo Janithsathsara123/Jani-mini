@@ -690,7 +690,7 @@ const buttonMessage = {
     headerType: 1,
     viewOnce: true,
     caption: '❏ *LOGO MAKER*',
-    image: { url: 'https://files.catbox.moe/sn20tl.jpg' },
+    image: { url: 'https://files.catbox.moe/84288h.jpg' },
 };
 
 await socket.sendMessage(from, buttonMessage, { quoted: msg });
