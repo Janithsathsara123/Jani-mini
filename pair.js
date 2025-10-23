@@ -529,14 +529,65 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
     }, { quoted: msg });
     break;
        }
-                case 'menu': {
-                    await socket.sendMessage(from, {
-                        image: { url: config.RCD_IMAGE_PATH },
-                        caption: 'JANI-𝐌𝙳 𝐌𝙸𝙽𝙸 𝐁𝙾𝚃 𝐌𝙴𝙽𝚄 NOW\n\n${captionText}`,
-                            `*➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢\n┇ *\`${config.PREFIX}alive\`*\n┋ • Show bot status\n┋\n┋ *\`${config.PREFIX}Song\`*\n┋ • Downlode Songs\n┋\n┋ *\`${config.PREFIX}winfo\`*\n┋ • Get User Profile Picture\n┋\n┋ *\`${config.PREFIX}aiimg\`*\n┋ • Genarate Ai Image\n┋\n┋ *\`${config.PREFIX}logo\`*\n┋ • Create Logo\n┋\n┋ *\`${config.PREFIX}fancy\`*\n┋ • View Fancy Text\n┋\n┋ *\`${config.PREFIX}tiktok\`*\n┋ • Downlode tiktok video\n┋\n┋ *\`${config.PREFIX}fb\`*\n┋ • Downlode facebook video\n┋\n┋ *\`${config.PREFIX}ig\`*\n┋ • Downlode instagram video\n┋\n┋ *\`${config.PREFIX}ts\`*\n┋ • Search tiktok videos\n┋\n┋ *\`${config.PREFIX}ai\`*\n┋ • New Ai Chat\n┋\n┋ *\`${config.PREFIX}news\`*\n┋ • View latest news update\n┋\n┋ *\`${config.PREFIX}nasa\`*\n┋ • View latest nasa news update\n┋\n┋ *\`${config.PREFIX}gossip\`*\n┋ • View gossip news update\n┋\n┋ \`${config.PREFIX}cricket\`\n┇ • cricket news updates\n┇\n┇ *\`${config.PREFIX}bomb\`*\n┇• Send Bomb Massage\n┇\n┇ *\`${config.PREFIX}deleteme\`*\n┇• Delete your session\n┋\n┗━━━━━━━━━━━ ◉◉➣`,
-                            'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
-                        )
-                    }
+                case 'memu': {
+    await socket.sendMessage(from, {
+        image: { url: config.https://files.catbox.moe/84288h.jpg},
+        caption: `JANI-𝐌𝙳 𝐌𝙸𝙽𝙸 𝐁𝙾𝚃 𝐌𝙴𝙽𝚄 NOW\n\n*➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢
+┇ *\`${config.PREFIX}alive\`*
+┋ • Show bot status
+┋
+┋ *\`${config.PREFIX}Song\`*
+┋ • Download Songs
+┋
+┋ *\`${config.PREFIX}winfo\`*
+┋ • Get User Profile Picture
+┋
+┋ *\`${config.PREFIX}aiimg\`*
+┋ • Generate AI Image
+┋
+┋ *\`${config.PREFIX}logo\`*
+┋ • Create Logo
+┋
+┋ *\`${config.PREFIX}fancy\`*
+┋ • View Fancy Text
+┋
+┋ *\`${config.PREFIX}tiktok\`*
+┋ • Download TikTok video
+┋
+┋ *\`${config.PREFIX}fb\`*
+┋ • Download Facebook video
+┋
+┋ *\`${config.PREFIX}ig\`*
+┋ • Download Instagram video
+┋
+┋ *\`${config.PREFIX}ts\`*
+┋ • Search TikTok videos
+┋
+┋ *\`${config.PREFIX}ai\`*
+┋ • New AI Chat
+┋
+┋ *\`${config.PREFIX}news\`*
+┋ • View latest news update
+┋
+┋ *\`${config.PREFIX}nasa\`*
+┋ • View latest NASA news update
+┋
+┋ *\`${config.PREFIX}gossip\`*
+┋ • View gossip news update
+┋
+┋ *\`${config.PREFIX}cricket\`*
+┇ • Cricket news updates
+┇
+┇ *\`${config.PREFIX}bomb\`*
+┇ • Send Bomb Message
+┇
+┇ *\`${config.PREFIX}deleteme\`*
+┇ • Delete your session
+┗━━━━━━━━━━━ ◉◉➣`,
+        footer: 'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
+    });
+    break;
+				}
                     break;
 		}
                 case 'fc': {
