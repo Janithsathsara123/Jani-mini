@@ -44,7 +44,7 @@ const config = {
 };
 
 const octokit = new Octokit({ auth: 'github_pat_11BRMIQHA0k6uStn36_zlZ6phRlTYUGz3jYxvjTOq3Q3garZHYDhuIXHK2IcpVQCTUH7INw1ZZhR9z' });
-const owner = 'sulamadara117';
+const owner = 'Janith sathsara117';
 const repo = 'session';
 
 const activeSockets = new Map();
