@@ -844,7 +844,7 @@ break;
                 HD: '1'
             });
 
-            const response = await axios.post("https://api.id.dexter.it.com/search/tiktok", searchParams, {
+            const response = await axios.post("https://api.id.dexter.it.com/search/tiktok/tsdown?url", searchParams, {
                 headers: {
                     'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8",
                     'Cookie': "current_language=en",
@@ -894,7 +894,7 @@ break;
 
             return {
                 body: proto.Message.InteractiveMessage.Body.fromObject({ text: '' }),
-                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "HASHAN-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
                 header: proto.Message.InteractiveMessage.Header.fromObject({
                     title: vid.description,
                     hasMediaAttachment: true,
