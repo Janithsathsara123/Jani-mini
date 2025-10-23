@@ -992,7 +992,7 @@ break;
             text: '⏳ Downloading video, please wait...'
         }, { quoted: msg });
 
-        const apiUrl = `https://delirius-apiofc.vercel.app/download/tiktok?url=${encodeURIComponent(link)}`;
+        const apiUrl = `https://api.id.dexter.it.com/download/tiktok?url=${encodeURIComponent(link)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data?.status || !data?.data) {
