@@ -467,7 +467,7 @@ const captionText = '𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳';
 const footerText = 'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃';
 
 const buttonMessage = {
-    image: { url: "https://files.catbox.moe/sn20tl.jpg" },
+    image: { url: "https://files.catbox.moe/84288h.jpg" },
     caption: captionText,
     footer: footerText,
     buttons,
