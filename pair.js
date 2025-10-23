@@ -1249,7 +1249,7 @@ break;
                         const match = url.match(regex);
                         return match ? match[1] : null;
 					}
-						const apiUrl = `https://api.id.dexter.it.com/download/youtube-audio/songdown?url=${encodeURIComponent(link)}`;
+						const apiUrl = `https://api.id.dexter.it.com/search/youtube/ytsdown?url=${encodeURIComponent(link)}`;
         const { data } = await axios.get(apiUrl);
                     
 
