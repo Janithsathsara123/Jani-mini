@@ -1251,9 +1251,8 @@ break;
 					}
 						const apiUrl = `https://api.id.dexter.it.com/search/youtube/ytsdown?url=${encodeURIComponent(link)}`;
         const { data } = await axios.get(apiUrl);
-                    
-
-                    function convertYouTubeLink(input) {
+					case 'video' {
+					function convertYouTubeLink(input) {
                         const videoId = extractYouTubeId(input);
                         if (videoId) {
                             return `https://www.youtube.com/watch?v=${videoId}`;
