@@ -486,7 +486,7 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
                     const seconds = Math.floor(uptime % 60);
 
     const captionText = `
-╭────◉◉◉────៚\n⏰ Bot Uptime: ${hours}h ${minutes}m ${seconds}s\n🟢 Active session: ${activeSockets.size}\n╰────◉◉◉────៚\n\n🔢 Your Number: ${number}\n\n*▫️
+╭────◉◉◉────៚\n⏰ Bot Uptime: ${hours}h ${minutes}m ${seconds}s\n🟢 Active session: ${activeSockets.size}\n╰────◉◉◉────៚\n\n🔢 Your Number: ${number}\n\n*JANI-MD Main Website🌐*\n> https://JANI-md.pages.dev
 `;
 
     await socket.sendMessage(m.chat, {
