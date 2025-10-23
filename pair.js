@@ -1046,7 +1046,7 @@ break;
     }
 
     try {
-        const res = await axios.get(`https://suhas-bro-api.vercel.app/download/fbdown?url=${encodeURIComponent(fbUrl)}`);
+        const res = await axios.get(`https://JANI-bro-api.vercel.app/download/fbdown?url=${encodeURIComponent(fbUrl)}`);
         const result = res.data.result;
 
         await socket.sendMessage(sender, { react: { text: '⬇', key: msg.key } });
@@ -1069,7 +1069,7 @@ break;
                 case 'gossip':
     try {
         
-        const response = await fetch('https://suhas-bro-api.vercel.app/news/gossiplankanews');
+        const response = await fetch('https://JANI-bro-api.vercel.app/news/gossiplankanews');
         if (!response.ok) {
             throw new Error('API එකෙන් news ගන්න බැරි වුණා.බන් 😩');
         }
@@ -1155,7 +1155,7 @@ break;
     break;
                 case 'news':
                     try {
-                        const response = await fetch('https://suhas-bro-api.vercel.app/news/lnw');
+                        const response = await fetch('https://JANI-bro-api.vercel.app/news/lnw');
                         if (!response.ok) {
                             throw new Error('Failed to fetch news from API');
                         }
@@ -1203,7 +1203,7 @@ break;
                 case 'cricket':
                     try {
                         console.log('Fetching cricket news from API...');
-                        const response = await fetch('https://suhas-bro-api.vercel.app/news/cricbuzz');
+                        const response = await fetch('https://JANI-bro-api.vercel.app/news/cricbuzz');
                         console.log(`API Response Status: ${response.status}`);
 
                         if (!response.ok) {
@@ -1875,7 +1875,7 @@ async function EmpirePair(number, res) {
                     await socket.sendMessage(userJid, {
                         image: { url: config.RCD_IMAGE_PATH },
                         caption: formatMessage(
-                            '👻 𝐖𝙴𝙻𝙲𝙾𝙼𝙴 𝐓𝙾 HASHAN-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 👻',
+                            '👻 𝐖𝙴𝙻𝙲𝙾𝙼𝙴 𝐓𝙾 JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 👻',
                             `✅ Successfully connected!\n\n🔢 Number: ${sanitizedNumber}\n`,
                             'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
                         )
