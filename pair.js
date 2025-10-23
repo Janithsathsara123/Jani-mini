@@ -1266,7 +1266,7 @@ break;
                               msg.message?.videoMessage?.caption || '';
 
                     if (!q || q.trim() === '') {
-                        return await socket.sendMessage(sender, { text: '*`https://api.id.dexter.it.com/download/youtube-audio`*' });
+                        return await socket.sendMessage(sender, { text: '*`I need to url`*' });
                     }
 
                     const fixedQuery = convertYouTubeLink(q.trim());
@@ -1332,7 +1332,7 @@ break;
                             image: { url: config.RCD_IMAGE_PATH },
                             caption: formatMessage(
                                 '❌ ERROR',
-                                'Invalid phone number! Please include country code (e.g., +94712345678)',
+                                'Invalid phone number! Please include country code (e.g., +94778826721)',
                                 '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
                             )
                         });
