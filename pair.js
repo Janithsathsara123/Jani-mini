@@ -1310,22 +1310,25 @@ break;
                     }
                     break;
                 }
-				case 'video':{
-		      msg.message?.extendedTextMessage?.text ||
-              msg.message?.imageMessage?.caption ||
-              msg.message?.videoMessage?.caption || '';
+				case 'video': {
+    const axios = require('axios');
+    const q =
+        msg.message?.conversation ||
+        msg.message?.extendedTextMessage?.text ||
+        msg.message?.imageMessage?.caption ||
+        msg.message?.videoMessage?.caption || '';
 
-    const link = q.replace(/(?:https?:\/\/):www\.)?(?:youtube\.com,\/(?:watch\?=|embed\/|v\/shorts\/youtu\.be\/)([a-zA-Z0-9_-]{11})/;).trim();
+    const link = q.replace(/^[.\/!]video\s*/i, '').trim();
 
     if (!link) {
         return await socket.sendMessage(sender, {
-            text: '📌 *Usage:* .yt <link>'
+            text: '📌 *Usage:* .video <YouTube link>'
         }, { quoted: msg });
     }
 
-    if (!link.includes('youtub.com')) {
+    if (!/youtu\.be|youtube\.com/.test(link)) {
         return await socket.sendMessage(sender, {
-            text: '❌ *Invalid youtube  link.*'
+            text: '❌ *Invalid YouTube link.*'
         }, { quoted: msg });
     }
 
@@ -1339,11 +1342,11 @@ break;
 
         if (!data?.status || !data?.data) {
             return await socket.sendMessage(sender, {
-                text: '❌ Failed to fetch youtube  video.'
+                text: '❌ Failed to fetch YouTube video.'
             }, { quoted: msg });
         }
 
-        const { title, like, comment, share, author, meta } = data.data;
+        const { title, author, meta } = data.data;
         const video = meta.media.find(v => v.type === "video");
 
         if (!video || !video.org) {
@@ -1352,26 +1355,25 @@ break;
             }, { quoted: msg });
         }
 
-        const caption = `🎵 *youtube  Video*\n\n` +
-                        `👤 *User:* ${author.nickname} (@${author.username})\n` +
-                        `📖 *Title:* ${title}\n` +
-                        `👍 *Likes:* ${like}\n💬 *Comments:* ${comment}\n🔁 *Shares:* ${share}`;
+        const caption = `🎬 *YouTube Video*\n\n` +
+                        `👤 *Channel:* ${author.nickname || 'Unknown'}\n` +
+                        `📖 *Title:* ${title}\n\n` +
+                        `> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳`;
 
         await socket.sendMessage(sender, {
             video: { url: video.org },
-            caption: caption,
-            contextInfo: { mentionedJid: [msg.key.participant || sender] }
+            caption: caption
         }, { quoted: msg });
 
     } catch (err) {
-        console.error("youtub command error:", err);
+        console.error("YouTube video command error:", err);
         await socket.sendMessage(sender, {
-            text: `❌ An error occurred:\n${err.message}`
+            text: `❌ Error: ${err.message}`
         }, { quoted: msg });
     }
 
     break;
-			}
+				}
                 case 'winfo':
                     console.log('winfo command triggered for:', number);
                     if (!args[0]) {
