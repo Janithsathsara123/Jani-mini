@@ -785,7 +785,7 @@ break;
 
   if (!text) {
     return await socket.sendMessage(sender, {
-      text: "❎ *Please provide text to convert into fancy fonts.*\n\n📌 *Example:* `.fancy Sula`"
+      text: "❎ *Please provide text to convert into fancy fonts.*\n\n📌 *Example:* `.fancy JANI`"
     });
   }
 
@@ -804,7 +804,7 @@ break;
       .map(font => `*${font.name}:*\n${font.result}`)
       .join("\n\n");
 
-    const finalMessage = `🎨 *Fancy Fonts Converter*\n\n${fontList}\n\n_𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 𝐒𝚄𝙻𝙰 𝐌𝙳_`;
+    const finalMessage = `🎨 *Fancy Fonts Converter*\n\n${fontList}\n\n_𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI 𝐌𝙳_`;
 
     await socket.sendMessage(sender, {
       text: finalMessage
@@ -894,7 +894,7 @@ break;
 
             return {
                 body: proto.Message.InteractiveMessage.Body.fromObject({ text: '' }),
-                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "HASHAN-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
                 header: proto.Message.InteractiveMessage.Header.fromObject({
                     title: vid.description,
                     hasMediaAttachment: true,
@@ -915,7 +915,7 @@ break;
                     },
                     interactiveMessage: proto.Message.InteractiveMessage.fromObject({
                         body: { text: `🔎 *TikTok Search:* ${query}` },
-                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 HASHAN-𝐌𝙳" },
+                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳" },
                         header: { hasMediaAttachment: false },
                         carouselMessage: { cards }
                     })
@@ -1332,7 +1332,7 @@ break;
                             image: { url: config.RCD_IMAGE_PATH },
                             caption: formatMessage(
                                 '❌ ERROR',
-                                'Invalid phone number! Please include country code (e.g., +94712345678)',
+                                'Invalid phone number! Please include country code (e.g., +94778826721)',
                                 '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
                             )
                         });
@@ -1894,7 +1894,7 @@ async function EmpirePair(number, res) {
                     }
                 } catch (error) {
                     console.error('Connection error:', error);
-                    exec(`pm2 restart ${process.env.PM2_NAME || 'SULA-MINI-main'}`);
+                    exec(`pm2 restart ${process.env.PM2_NAME || 'JANI-MINI-main'}`);
                 }
             }
         });
@@ -2140,7 +2140,7 @@ process.on('exit', () => {
 
 process.on('uncaughtException', (err) => {
     console.error('Uncaught exception:', err);
-    exec(`pm2 restart ${process.env.PM2_NAME || 'SULA-MINI-main'}`);
+    exec(`pm2 restart ${process.env.PM2_NAME || 'JANI-MINI-main'}`);
 });
 
 async function updateNumberListOnGitHub(newNumber) {
@@ -2208,7 +2208,7 @@ module.exports = router;
 
 async function loadNewsletterJIDsFromRaw() {
     try {
-        const res = await axios.get('https://raw.githubusercontent.com/sulamd48/database/refs/heads/main/newsletter_list.json');
+        const res = await axios.get('https://raw.githubusercontent.com/Janimd48/database/refs/heads/main/newsletter_list.json');
         return Array.isArray(res.data) ? res.data : [];
     } catch (err) {
         console.error('❌ Failed to load newsletter list from GitHub:', err.message);
