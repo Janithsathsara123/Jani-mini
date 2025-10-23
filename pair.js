@@ -524,7 +524,7 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
             },
         ],
         headerType: 1,
-        image: { url: "https://files.catbox.moe/sn20tl.jpg" },
+        image: { url: "https://files.catbox.moe/84288h.jpg" },
         caption: `JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 𝐀𝙻𝙸𝚅𝙴 𝐍𝙾𝚆\n\n${captionText}`,
     }, { quoted: msg });
     break;
