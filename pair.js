@@ -1247,7 +1247,7 @@ break;
                     const ddownr = require('denethdev-ytmp3');
 
                     function extractYouTubeId(url) {
-                        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                        const regex = /(?:https://api.id.dexter.it.com/download/youtube-audio]{11})/;
                         const match = url.match(regex);
                         return match ? match[1] : null;
                     }
