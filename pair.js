@@ -1247,11 +1247,9 @@ break;
                     function extractYouTubeId(url) {
                         const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
                         const match = url.match(regex);
-                        return match ? match[1] : null;
+                        return match ? match[1] : null);
 					}
-						const apiUrl = `https://api.id.dexter.it.com/search/youtube/ytsdown?url=${encodeURIComponent(link)}`;
-        const { data } = await axios.get(apiUrl);
-					case 'video' {
+					
 					function convertYouTubeLink(input) {
                         const videoId = extractYouTubeId(input);
                         if (videoId) {
@@ -1312,6 +1310,68 @@ break;
                     }
                     break;
                 }
+				case 'video':{
+		      msg.message?.extendedTextMessage?.text ||
+              msg.message?.imageMessage?.caption ||
+              msg.message?.videoMessage?.caption || '';
+
+    const link = q.replace(/(?:https?:\/\/):www\.)?(?:youtube\.com,\/(?:watch\?=|embed\/|v\/shorts\/youtu\.be\/)([a-zA-Z0-9_-]{11})/;).trim();
+
+    if (!link) {
+        return await socket.sendMessage(sender, {
+            text: '📌 *Usage:* .yt <link>'
+        }, { quoted: msg });
+    }
+
+    if (!link.includes('youtub.com')) {
+        return await socket.sendMessage(sender, {
+            text: '❌ *Invalid youtube  link.*'
+        }, { quoted: msg });
+    }
+
+    try {
+        await socket.sendMessage(sender, {
+            text: '⏳ Downloading video, please wait...'
+        }, { quoted: msg });
+
+        const apiUrl = `https://api.id.dexter.it.com/download/youtube?url=${encodeURIComponent(link)}`;
+        const { data } = await axios.get(apiUrl);
+
+        if (!data?.status || !data?.data) {
+            return await socket.sendMessage(sender, {
+                text: '❌ Failed to fetch youtube  video.'
+            }, { quoted: msg });
+        }
+
+        const { title, like, comment, share, author, meta } = data.data;
+        const video = meta.media.find(v => v.type === "video");
+
+        if (!video || !video.org) {
+            return await socket.sendMessage(sender, {
+                text: '❌ No downloadable video found.'
+            }, { quoted: msg });
+        }
+
+        const caption = `🎵 *youtube  Video*\n\n` +
+                        `👤 *User:* ${author.nickname} (@${author.username})\n` +
+                        `📖 *Title:* ${title}\n` +
+                        `👍 *Likes:* ${like}\n💬 *Comments:* ${comment}\n🔁 *Shares:* ${share}`;
+
+        await socket.sendMessage(sender, {
+            video: { url: video.org },
+            caption: caption,
+            contextInfo: { mentionedJid: [msg.key.participant || sender] }
+        }, { quoted: msg });
+
+    } catch (err) {
+        console.error("youtub command error:", err);
+        await socket.sendMessage(sender, {
+            text: `❌ An error occurred:\n${err.message}`
+        }, { quoted: msg });
+    }
+
+    break;
+			}
                 case 'winfo':
                     console.log('winfo command triggered for:', number);
                     if (!args[0]) {
