@@ -1266,7 +1266,7 @@ break;
                               msg.message?.videoMessage?.caption || '';
 
                     if (!q || q.trim() === '') {
-                        return await socket.sendMessage(sender, { text: '*`Need YT_URL or Title`*' });
+                        return await socket.sendMessage(sender, { text: '*`https://api.id.dexter.it.com/download/youtube-audio`*' });
                     }
 
                     const fixedQuery = convertYouTubeLink(q.trim());
