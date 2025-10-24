@@ -1448,13 +1448,15 @@ break;
     if (!/youtu\.be|youtube\.com/.test(videoUrl)) {
       const search = await yts(searchQuery);
       if (!search.videos || search.videos.length === 0) {
-        return await socket.sendMessage(sender, { text: '❌ *No video found on YouTube.*' }, { quoted: msg });
-      }
+    return await socket.sendMessage(sender, { 
+        text: '❌ *No video found on YouTube.*' 
+    }, { quoted: msg });
+	  }
       videoUrl = search.videos[0].url;
     }
 
     // ✅ Use a reliable API for YouTube video download
-    const apiUrl = `https://api.falsisdevs.site/downloader/ytmp4?url=${encodeURIComponent(videoUrl)}`;
+    const apiUrl = `https://itzpire.com/download/ytmp4?url=${encodeURIComponent(videoUrl)}`;
     const { data } = await axios.get(apiUrl);
 
     if (!data?.status || !data?.result?.download_url) {
@@ -1470,11 +1472,11 @@ break;
 
 > *POWERED BY JANI-MD*
 `;
-
-    await socket.sendMessage(sender, {
-      video: { url: videoInfo.download_url },
-      caption
-    }, { quoted: msg });
+	  await socket.sendMessage(sender, {
+  video: { url: videoInfo.download_url },
+  mimetype: 'video/mp4',
+  caption: caption
+}, { quoted: msg });
 
   } catch (err) {
     console.error('🎥 Video Command Error:', err.message);
