@@ -1311,70 +1311,37 @@ break;
     break;
 					}
             
-				case 'video': {
-    const axios = require('axios');
-    const q =
-        msg.message?.conversation ||
-        msg.message?.extendedTextMessage?.text ||
-        msg.message?.imageMessage?.caption ||
-        msg.message?.videoMessage?.caption || '';
+				case 'video': { const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
 
-    const link = q.replace(/^[.\/!]video\s*/i, '').trim();
+const link = q.replace(/^[./!]video\s*/i, '').trim();
 
-    if (!link) {
-        return await socket.sendMessage(sender, {
-            text: '📌 *Usage:* .video <YouTube link>'
-        }, { quoted: msg });
-    }
+if (!link) { return await socket.sendMessage(sender, { text: '📌 Usage: .video <YouTube link>' }, { quoted: msg }); }
 
-    if (!/youtu\.be|youtube\.com/.test(link)) {
-        return await socket.sendMessage(sender, {
-            text: '❌ *Invalid YouTube link.*'
-        }, { quoted: msg });
-    }
+if (!/youtu.be|youtube.com/.test(link)) { return await socket.sendMessage(sender, { text: '❌ Invalid YouTube link.' }, { quoted: msg }); }
 
-    try {
-        await socket.sendMessage(sender, {
-            text: '⏳ Downloading video, please wait...'
-        }, { quoted: msg });
+try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wait...' }, { quoted: msg });
 
-        const apiUrl = `https://api.id.dexter.it.com/download/youtube?url=${encodeURIComponent(link)}`;
-        const { data } = await axios.get(apiUrl);
+// 🆕 New API (reliable one)
+  const apiUrl = `https://api.akuari.my.id/downloader/ytdl?link=${encodeURIComponent(link)}`;
+  const { data } = await axios.get(apiUrl);
 
-        if (!data?.status || !data?.data) {
-            return await socket.sendMessage(sender, {
-                text: '❌ Failed to fetch YouTube video.'
-            }, { quoted: msg });
-        }
+  if (!data || !data.result?.video) {
+      return await socket.sendMessage(sender, {
+          text: '❌ *Failed to download video. Please try again later.*'
+      }, { quoted: msg });
+  }
 
-        const { title, author, meta } = data.data;
-        const video = meta.media.find(v => v.type === "video");
+  const caption = `🎬 *YouTube Video Downloader*\n\n📖 *Title:* ${data.result.title}\n👤 *Channel:* ${data.result.channel}\n🕒 *Duration:* ${data.result.duration}\n> *POWERED BY JANI-MD*`;
 
-        if (!video || !video.org) {
-            return await socket.sendMessage(sender, {
-                text: '❌ No downloadable video found.'
-            }, { quoted: msg });
-        }
+  await socket.sendMessage(sender, {
+      video: { url: data.result.video },
+      caption
+  }, { quoted: msg });
 
-        const caption = `🎬 *YouTube Video*\n\n` +
-                        `👤 *Channel:* ${author.nickname || 'Unknown'}\n` +
-                        `📖 *Title:* ${title}\n\n` +
-                        `> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳`;
+} catch (err) { console.error("YouTube video command error:", err); await socket.sendMessage(sender, { text: ❌ Error: ${err.message} }, { quoted: msg }); }
 
-        await socket.sendMessage(sender, {
-            video: { url: video.org },
-            caption: caption
-        }, { quoted: msg });
-
-    } catch (err) {
-        console.error("YouTube video command error:", err);
-        await socket.sendMessage(sender, {
-            text: `❌ Error: ${err.message}`
-        }, { quoted: msg });
-    }
-
-    break;
-				}
+break; }
+    
                 case 'winfo':
                     console.log('winfo command triggered for:', number);
                     if (!args[0]) {
