@@ -1275,7 +1275,7 @@ break;
         }
 
         // 🧠 Fetch MP3 download link (API)
-        const apiUrl = `https://api.akuari.my.id/downloader/ytdl?link=${encodeURIComponent(video.url)}`;
+        const apiUrl = `https://zylalabs.com/api/3881/facebook+media+downloader+api/4582/download+reel+or+video/ytdl?link=${encodeURIComponent(video.url)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.result?.mp3) {
@@ -1322,7 +1322,7 @@ if (!/youtu.be|youtube.com/.test(link)) { return await socket.sendMessage(sender
 try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wait...' }, { quoted: msg });
 
 // 🆕 New API (reliable one)
-  const apiUrl = `https://api.akuari.my.id/downloader/ytdl?link=${encodeURIComponent(link)}`;
+  const apiUrl = `https://zylalabs.com/api/3881/facebook+media+downloader+api/4582/download+reel+or+video/ytdl?link=${encodeURIComponent(link)}`;
   const { data } = await axios.get(apiUrl);
 
   if (!data || !data.result?.video) {
