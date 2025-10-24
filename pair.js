@@ -1366,7 +1366,8 @@ break;
                         });
                     }
                     break;
-                case 'song': {
+                case 'song':
+				try	{
     const yts = require('yt-search');
     const axios = require('axios');
 
@@ -1390,7 +1391,7 @@ break;
         }
 
         // 🧠 Fetch MP3 download link (API)
-        const apiUrl = `https://zylalabs.com/api/3881/facebook+media+downloader+api/4582/download+reel+or+video/ytdl?link=${encodeURIComponent(video.url)}`;
+        const apiUrl = `https://api.id.dexter.it.com/download/youtube-audio?url=${encodeURIComponent(video.url)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data || !data.result?.mp3) {
