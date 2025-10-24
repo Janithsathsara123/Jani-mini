@@ -1252,75 +1252,65 @@ break;
                     }
                     break;
                 case 'song': {
-                    const yts = require('yt-search');
-                    const ddownr = require('denethdev-ytmp3');
+    const yts = require('yt-search');
+    const axios = require('axios');
 
-                    function extractYouTubeId(url) {
-                        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-                        const match = url.match(regex);
-                        return match ? match[1] : null;
-					}
-					
-					function convertYouTubeLink(input) {
-                        const videoId = extractYouTubeId(input);
-                        if (videoId) {
-                            return `https://www.youtube.com/watch?v=${videoId}`;
-                        }
-                        return input;
-                    }
+    const q = msg.message?.conversation || 
+              msg.message?.extendedTextMessage?.text || 
+              msg.message?.imageMessage?.caption || 
+              msg.message?.videoMessage?.caption || '';
 
-                    const q = msg.message?.conversation || 
-                              msg.message?.extendedTextMessage?.text || 
-                              msg.message?.imageMessage?.caption || 
-                              msg.message?.videoMessage?.caption || '';
+    if (!q || q.trim() === '') {
+        return await socket.sendMessage(sender, { text: '🎵 *Please provide a song name or YouTube link!*' });
+    }
 
-                    if (!q || q.trim() === '') {
-                        return await socket.sendMessage(sender, { text: '*`I need to url`*' });
-                    }
+    await socket.sendMessage(sender, { text: '🎧 *Searching and downloading your song...* 🎶' }, { quoted: msg });
 
-                    const fixedQuery = convertYouTubeLink(q.trim());
+    try {
+        // 🔍 Search YouTube video
+        const search = await yts(q);
+        const video = search.videos[0];
+        if (!video) {
+            return await socket.sendMessage(sender, { text: '❌ *No results found on YouTube.*' });
+        }
 
-                    try {
-                        const search = await yts(fixedQuery);
-                        const data = search.videos[0];
-                        if (!data) {
-                            return await socket.sendMessage(sender, { text: '*`No results found`*' });
-                        }
+        // 🧠 Fetch MP3 download link (API)
+        const apiUrl = `https://api.akuari.my.id/downloader/ytdl?link=${encodeURIComponent(video.url)}`;
+        const { data } = await axios.get(apiUrl);
 
-                        const url = data.url;
-                        const desc = `
-🎵 *𝚃𝚒𝚝𝚕𝚎 :* \`${data.title}\`
+        if (!data || !data.result?.mp3) {
+            return await socket.sendMessage(sender, { text: '❌ *Failed to download song. Please try again later.*' });
+        }
 
-◆⏱️ *𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗* : ${data.timestamp} 
-
-◆ *𝚅𝚒𝚎𝚠𝚜* : ${data.views}
-
-◆ 📅 *𝚁𝚎𝚕𝚎𝚊𝚜 𝙳𝚊𝚝𝚎* : ${data.ago}
+        // 🖼️ Send info + thumbnail
+        const caption = `
+🎶 *Title:* ${video.title}
+🕒 *Duration:* ${video.timestamp}
+👀 *Views:* ${video.views}
+📅 *Published:* ${video.ago}
+> *POWERED BY JANI-MD*
 `;
 
-                        await socket.sendMessage(sender, {
-                            image: { url: data.thumbnail },
-                            caption: desc,
-                        }, { quoted: msg });
+        await socket.sendMessage(sender, {
+            image: { url: video.thumbnail },
+            caption
+        }, { quoted: msg });
 
-                        await socket.sendMessage(sender, { react: { text: '⬇️', key: msg.key } });
+        // 🎧 Send audio
+        await socket.sendMessage(sender, {
+            audio: { url: data.result.mp3 },
+            mimetype: 'audio/mpeg',
+            ptt: false
+        }, { quoted: msg });
 
-                        const result = await ddownr.download(url, 'mp3');
-                        const downloadLink = result.downloadUrl;
+    } catch (err) {
+        console.error('Song command error:', err);
+        await socket.sendMessage(sender, { text: '⚠️ *Error fetching song. Please try again later.*' });
+    }
 
-                        await socket.sendMessage(sender, { react: { text: '⬆️', key: msg.key } });
-
-                        await socket.sendMessage(sender, {
-                            audio: { url: downloadLink },
-                            mimetype: "audio/mpeg",
-                            ptt: true
-                        }, { quoted: msg });
-                    } catch (err) {
-                        console.error(err);
-                        await socket.sendMessage(sender, { text: "*`Error occurred while downloading`*" });
-                    }
-                    break;
-                }
+    break;
+					}
+            
 				case 'video': {
     const axios = require('axios');
     const q =
