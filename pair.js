@@ -496,6 +496,39 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
         );
     }
 		}
+					case 'ping': {
+    const startTime = Date.now();
+    await socket.sendPresenceUpdate('composing', sender);
+
+    // Calculate ping
+    const latency = Date.now() - startTime;
+
+    // Calculate uptime
+    const startTimeBot = socketCreationTime.get(number) || Date.now();
+    const uptimeSec = Math.floor((Date.now() - startTimeBot) / 1000);
+    const hours = Math.floor(uptimeSec / 3600);
+    const minutes = Math.floor((uptimeSec % 3600) / 60);
+    const seconds = Math.floor(uptimeSec % 60);
+
+    // Time & Date (Sri Lanka)
+    const date = new Date().toLocaleDateString('en-LK', { timeZone: 'Asia/Colombo' });
+    const time = new Date().toLocaleTimeString('en-LK', { timeZone: 'Asia/Colombo' });
+
+    const caption = `
+🏓 *PONG!*
+⚡ *Response:* ${latency} ms
+🕒 *Uptime:* ${hours}h ${minutes}m ${seconds}s
+📅 *Date:* ${date}
+⏰ *Time:* ${time}
+
+> *POWERED BY JANI-MD*
+`;
+
+    await socket.sendMessage(sender, {
+        text: caption
+    }, { quoted: msg });
+    break;
+	}
 case 'alive': {
     const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
