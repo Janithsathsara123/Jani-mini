@@ -1366,39 +1366,40 @@ break;
                         });
                     }
                     break;
-                case 'song':
-    const yts = require('yt-search');
-    const axios = require('axios');
+		}
+		    case 'song': {
+  const yts = require('yt-search');
+  const axios = require('axios');
 
-    const q = msg.message?.conversation || 
-              msg.message?.extendedTextMessage?.text || 
-              msg.message?.imageMessage?.caption || 
-              msg.message?.videoMessage?.caption || '';
+  const q = msg.message?.conversation ||
+            msg.message?.extendedTextMessage?.text ||
+            msg.message?.imageMessage?.caption ||
+            msg.message?.videoMessage?.caption || '';
 
-    if (!q || q.trim() === '') {
-        return await socket.sendMessage(sender, { text: '🎵 *Please provide a song name or YouTube link!*' });
+  if (!q || q.trim() === '') {
+    return await socket.sendMessage(sender, { text: '🎵 *Please provide a song name or YouTube link!*' });
+  }
+
+  await socket.sendMessage(sender, { text: '🎧 *Searching your song... Please wait!* 🎶' }, { quoted: msg });
+
+  try {
+    // 🔍 Search YouTube video
+    const search = await yts(q);
+    const video = search.videos[0];
+    if (!video) {
+      return await socket.sendMessage(sender, { text: '❌ *No results found on YouTube.*' });
     }
 
-    await socket.sendMessage(sender, { text: '🎧 *Searching and downloading your song...* 🎶' }, { quoted: msg });
+    // 🆕 New working API for mp3
+    const apiUrl = `https://api.falsisdevs.site/downloader/ytmp3?url=${encodeURIComponent(video.url)}`;
+    const { data } = await axios.get(apiUrl);
 
-    try {
-        // 🔍 Search YouTube video
-        const search = await yts(q);
-        const video = search.videos[0];
-        if (!video) {
-            return await socket.sendMessage(sender, { text: '❌ *No results found on YouTube.*' });
-        }
+    if (!data || !data.result?.download_url) {
+      return await socket.sendMessage(sender, { text: '❌ *Failed to download song. Please try again later.*' });
+    }
 
-        // 🧠 Fetch MP3 download link (API)
-        const apiUrl = `https://api.id.dexter.it.com/download/youtube-audio?url=${encodeURIComponent(video.url)}`;
-        const { data } = await axios.get(apiUrl);
-
-        if (!data || !data.result?.mp3) {
-            return await socket.sendMessage(sender, { text: '❌ *Failed to download song. Please try again later.*' });
-        }
-
-        // 🖼️ Send info + thumbnail
-        const caption = `
+    // 🖼️ Send info + thumbnail
+    const caption = `
 🎶 *Title:* ${video.title}
 🕒 *Duration:* ${video.timestamp}
 👀 *Views:* ${video.views}
@@ -1406,24 +1407,24 @@ break;
 > *POWERED BY JANI-MD*
 `;
 
-        await socket.sendMessage(sender, {
-            image: { url: video.thumbnail },
-            caption
-        }, { quoted: msg });
+    await socket.sendMessage(sender, {
+      image: { url: video.thumbnail },
+      caption
+    }, { quoted: msg });
 
-        // 🎧 Send audio
-        await socket.sendMessage(sender, {
-            audio: { url: data.result.mp3 },
-            mimetype: 'audio/mpeg',
-            ptt: false
-        }, { quoted: msg });
+    // 🎧 Send audio file
+    await socket.sendMessage(sender, {
+      audio: { url: data.result.download_url },
+      mimetype: 'audio/mpeg',
+      ptt: false
+    }, { quoted: msg });
 
-    } catch (err) {
-        console.error('Song command error:', err);
-        await socket.sendMessage(sender, { text: '⚠️ *Error fetching song. Please try again later.*' });
-    }
-
-    break;
+  } catch (err) {
+    console.error('Song command error:', err);
+    await socket.sendMessage(sender, { text: '⚠️ *Error fetching song. Please try again later.*' });
+  }
+  break;
+		}
             case 'video';
 const yts = require('yt-search');		
 const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
