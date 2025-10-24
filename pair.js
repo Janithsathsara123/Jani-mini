@@ -857,7 +857,7 @@ break;
 
   if (!text) {
     return await socket.sendMessage(sender, {
-      text: "❎ *Please provide text to convert into fancy fonts.*\n\n📌 *Example:* `.fancy Sula`"
+      text: "❎ *Please provide text to convert into fancy fonts.*\n\n📌 *Example:* `.fancy JANI`"
     });
   }
 
