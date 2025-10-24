@@ -557,7 +557,7 @@ case 'alive': {
 ╰──────────────────────────────╯
 > *POWERED BY JANI-MD*
 `;
-
+}
     await socket.sendMessage(sender, {
         image: { url: "https://files.catbox.moe/84288h.jpg" },
         caption: captionText,
