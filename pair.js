@@ -1425,6 +1425,7 @@ break;
 
     break;
             case 'video';
+const yts = require('yt-search');		
 const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
 const link = q.replace(/^[./!]video\s*/i, '').trim();
 
@@ -1435,24 +1436,25 @@ if (!/youtu.be|youtube.com/.test(link)) { return await socket.sendMessage(sender
 try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wait...' }, { quoted: msg });
 
 // 🆕 New API (reliable one)
-  const apiUrl = `https://www.youtube.com/watch?v=dB2GMQYTXGU/ytdown?link=${encodeURIComponent(link)}`;
+  const apiUrl = `https://www.youtube.com/watch?v=dB2GMQYTXGU/ytdown?link=${encodeURIComponent(video.url)}`;
   const { data } = await axios.get(apiUrl);
 
-  if (!data || !data.result?.video) {
-      return await socket.sendMessage(sender, {
-          text: '❌ *Failed to download video. Please try again later.*'
+  if (!data || !data.result?.video,mp4) {
+      return await socket.sendMessage(sender,{text: '❌ *Failed to download video. Please try again later.*'
       }, { quoted: msg });
   }
 
   const caption = `🎬 *YouTube Video Downloader*\n\n📖 *Title:* ${data.result.title}\n👤 *Channel:* ${data.result.channel}\n🕒 *Duration:* ${data.result.duration}\n> *POWERED BY JANI-MD*`;
 
   await socket.sendMessage(sender, {
-      video: { url: data.result.video },
-      caption
+      video: { url: data.result.video, mp4},
+      ptt: false
   }, { quoted: msg });
 
-} catch (err) { console.error("YouTube video command error:", err); await socket.sendMessage(sender, { text: ❌ Error: ${err.message} }, { quoted: msg });	
-		0}
+} catch (err) { 
+	console.error("YouTube video download .video:", err); 
+	await socket.sendMessage(sender, { text: '❌ *Error fatching video. please try again later.*' });	
+		}
 
 break; }
     
