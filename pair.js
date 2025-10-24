@@ -529,22 +529,22 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
     }, { quoted: msg });
     break;
 	}
-    case 'alive': {
-    const startTime = socketCreationTime.get(number) || Date.now();
-    const uptime = Math.floor((Date.now() - startTime) / 1000);
-    const hours = Math.floor(uptime / 3600);
-    const minutes = Math.floor((uptime % 3600) / 60);
-    const seconds = Math.floor(uptime % 60);
+  case 'alive': {
+  const startTime = socketCreationTime.get(number) || Date.now();
+  const uptime = Math.floor((Date.now() - startTime) / 1000);
+  const hours = Math.floor(uptime / 3600);
+  const minutes = Math.floor((uptime % 3600) / 60);
+  const seconds = Math.floor(uptime % 60);
 
-    const now = new Date();
-    const date = now.toLocaleDateString('en-LK', { timeZone: 'Asia/Colombo' });
-    const time = now.toLocaleTimeString('en-LK', { timeZone: 'Asia/Colombo' });
+  const now = new Date();
+  const date = now.toLocaleDateString('en-LK', { timeZone: 'Asia/Colombo' });
+  const time = now.toLocaleTimeString('en-LK', { timeZone: 'Asia/Colombo' });
 
-    const pingStart = Date.now();
-    await socket.sendPresenceUpdate('composing', sender);
-    const ping = Date.now() - pingStart;
+  const pingStart = Date.now();
+  await socket.sendPresenceUpdate('composing', sender);
+  const ping = Date.now() - pingStart;
 
-    const captionText = `
+  const captionText = `
 ╭──────❏ *JANI-MD STATUS PANEL* ❏──────╮
 │📅 *Date:* ${date}
 │⏰ *Time:* ${time}
@@ -557,16 +557,15 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
 ╰──────────────────────────────╯
 > *POWERED BY JANI-MD*
 `;
-}
-    await socket.sendMessage(sender, {
-        image: { url: "https://files.catbox.moe/84288h.jpg" },
-        caption: captionText,
-        footer: 'JANI-MD BOT SYSTEM'
-    }, { quoted: msg });
-			}
 
-    break;
-}
+  await socket.sendMessage(sender, {
+      image: { url: "https://files.catbox.moe/84288h.jpg" },
+      caption: captionText,
+      footer: 'JANI-MD BOT SYSTEM'
+  }, { quoted: msg });
+
+  break; // <- මෙය අවසානින් තියෙන්න ඕනෙ
+	  }
     case 'menu': {
     const menuImage = "https://files.catbox.moe/84288h.jpg";
     const menuText = `
@@ -593,8 +592,7 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
 > *POWERED BY JANI-MD TEAM*
 `;
 
-    await socket.sendMessage(sender, {
-		text:'send in .menu message'
+    await socket.sendMessage(sender,{
         image: { url: menuImage },
         caption: menuText,
         footer: 'JANI-MD FREE BOT SYSTEM'
