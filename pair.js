@@ -1075,6 +1075,68 @@ break;
 
     break;
 }
+					case 'ig': {
+  const axios = require('axios');
+
+  const q =
+    msg.message?.conversation ||
+    msg.message?.extendedTextMessage?.text ||
+    msg.message?.imageMessage?.caption ||
+    msg.message?.videoMessage?.caption ||
+    '';
+
+  const igUrl = q?.trim();
+
+  if (!/instagram\.com/.test(igUrl)) {
+    return await socket.sendMessage(sender, {
+      text: '📌 *Please provide a valid Instagram link.*\n\nExample:\n`.ig https://www.instagram.com/reel/.../`',
+    });
+  }
+
+  try {
+    await socket.sendMessage(sender, { text: '⏳ *Downloading Instagram video... Please wait.*' });
+
+    // 🧠 API URL එක මෙතන දාන්න (Replace this with your working API)
+    const apiUrl = `https://api.id.dexter.it.com/download/instagram?url=${encodeURIComponent(igUrl)}`;
+    // 👉 Example alternative free API (if the above one stops working)
+    // const apiUrl = `https://api.falsisdevs.site/downloader/ig?url=${encodeURIComponent(igUrl)}`;
+
+    const { data } = await axios.get(apiUrl);
+
+    // ✅ Validate API response
+    if (!data || !data.data || !data.data[0]?.url) {
+      return await socket.sendMessage(sender, {
+        text: '❌ *Failed to fetch Instagram video. Please try again later.*',
+      });
+    }
+
+    const videoUrl = data.data[0].url;
+    const thumbnail = data.data[0].thumbnail || 'https://files.catbox.moe/84288h.jpg';
+    const title = data.data[0].title || 'Instagram Reel';
+
+    // 🖼️ Send preview image
+    await socket.sendMessage(sender, {
+      image: { url: thumbnail },
+      caption: `🎬 *${title}*\n📎 *Source:* ${igUrl}\n> *POWERED BY JANI-MD*`,
+    }, { quoted: msg });
+
+    // 🎥 Send downloaded video
+    await socket.sendMessage(sender, {
+      video: { url: videoUrl },
+      mimetype: 'video/mp4',
+      caption: '✅ *Instagram video downloaded successfully!*\n> *POWERED BY JANI-MD*',
+    }, { quoted: msg });
+
+  } catch (e) {
+    console.error('Instagram API Error:', e.message);
+    await socket.sendMessage(sender, {
+      text: `❌ *Error fetching from API:* ${e.message}`,
+    });
+  }
+
+  break;
+					
+					}							
                 case 'gossip':
     try {
         
