@@ -1055,7 +1055,7 @@ break;
     }
 
     try {
-        const res = await axios.get(`https://suhas-bro-api.vercel.app/download/fbdown?url=${encodeURIComponent(fbUrl)}`);
+        const res = await axios.get(`https://zylalabs.com/api/3881/facebook+media+downloader+api/4582/download+reel+or+video/fbdown?url=${encodeURIComponent(fbUrl)}`);
         const result = res.data.result;
 
         await socket.sendMessage(sender, { react: { text: '⬇', key: msg.key } });
