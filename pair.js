@@ -1810,4 +1810,4 @@ function setupAutoRestart(socket, number) {
                 await deleteSessionFromGitHub(number);
                 
                 // Delete local session folder
-                const ses
+                const ses = 'something'; // or remove entirely
