@@ -550,9 +550,44 @@ case 'alive': {
     }, { quoted: msg });
     break;
        }
-                case 'memu': {
+        case 'memu': {
+    const menuImage = "https://files.catbox.moe/84288h.jpg"; // ✅ correct image link
+    const menuText = `
+╭──────❏ *JANI-MD MINI BOT MENU* ❏──────╮
+│
+│⚙️ *Available Commands:*
+│
+│💠 ${config.PREFIX}alive - Check bot status
+│💠 ${config.PREFIX}song - Download songs
+│💠 ${config.PREFIX}video - Download YouTube videos
+│💠 ${config.PREFIX}tiktok - TikTok downloader
+│💠 ${config.PREFIX}fb - Facebook downloader
+│💠 ${config.PREFIX}ig - Instagram downloader
+│💠 ${config.PREFIX}aiimg - Generate AI image
+│💠 ${config.PREFIX}logo - Create logo styles
+│💠 ${config.PREFIX}fancy - Fancy text generator
+│💠 ${config.PREFIX}winfo - WhatsApp profile info
+│💠 ${config.PREFIX}ts - Search TikTok videos
+│💠 ${config.PREFIX}ai - Chat with JANI AI
+│💠 ${config.PREFIX}news - Latest local news
+│💠 ${config.PREFIX}gossip - Gossip Lanka news
+│💠 ${config.PREFIX}nasa - NASA space updates
+│💠 ${config.PREFIX}cricket - Live cricket news
+│💠 ${config.PREFIX}bomb - Send multiple messages
+│💠 ${config.PREFIX}deleteme - Delete your session
+│
+╰──────────────────────────────╯
+> *Powered By JANI-MD TEAM*
+`;
+
     await socket.sendMessage(from, {
-        image: { url: config.https://files.catbox.moe/84288h.jpg},
+        image: { url: menuImage },
+        caption: menuText,
+        footer: 'JANI-MD FREE BOT SYSTEM'
+    }, { quoted: msg });
+
+    break;
+		}
         caption: `JANI-𝐌𝙳 𝐌𝙸𝙽𝙸 𝐁𝙾𝚃 𝐌𝙴𝙽𝚄 NOW\n\n*➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢
 ┇ *\`${config.PREFIX}alive\`*
 ┋ • Show bot status
