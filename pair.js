@@ -1367,7 +1367,7 @@ break;
                     }
                     break;
 		}
-		    case 'song': {
+		case 'song': {
   const yts = require('yt-search');
   const axios = require('axios');
 
@@ -1382,7 +1382,7 @@ break;
     return await socket.sendMessage(sender, { text: '🎵 *Please enter a song name!*' });
   }
 
-  await socket.sendMessage(sender, { text: '🎧 *Searching your song... Please wait!* 🎶' }, { quoted: msg });
+  await socket.sendMessage(sender, { text: '🎧 *Searching for your song...* 🎶' }, { quoted: msg });
 
   try {
     const search = await yts(songName);
@@ -1391,11 +1391,12 @@ break;
       return await socket.sendMessage(sender, { text: '❌ *No results found on YouTube.*' });
     }
 
-    const apiUrl = `https://api-viper-xi.vercel.app/api/ytmp3?url=${encodeURIComponent(video.url)}`;
+    // ✅ Stable API for mp3 download
+    const apiUrl = `https://api.falsisdevs.site/downloader/ytmp3?url=${encodeURIComponent(video.url)}`;
     const { data } = await axios.get(apiUrl);
 
-    if (!data?.status || !data?.data?.download_url) {
-      return await socket.sendMessage(sender, { text: '❌ *Failed to fetch download link.*' });
+    if (!data?.status || !data?.result?.download_url) {
+      return await socket.sendMessage(sender, { text: '❌ *Failed to get download link. Try again later.*' });
     }
 
     const caption = `
@@ -1412,17 +1413,17 @@ break;
     }, { quoted: msg });
 
     await socket.sendMessage(sender, {
-      audio: { url: data.data.download_url },
+      audio: { url: data.result.download_url },
       mimetype: 'audio/mpeg',
       ptt: false
     }, { quoted: msg });
 
   } catch (err) {
     console.error('Song Command Error:', err);
-    await socket.sendMessage(sender, { text: '⚠️ *Error while fetching song. Please try again later.*' });
+    await socket.sendMessage(sender, { text: '⚠️ *Error fetching song. Please try again later.*' });
   }
   break;
-			}
+		}
             case 'video';
 const yts = require('yt-search');		
 const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
