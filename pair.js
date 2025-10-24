@@ -479,19 +479,27 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
     break;
 }
        case 'alive': {
-                    const startTime = socketCreationTime.get(number) || Date.now();
-                    const uptime = Math.floor((Date.now() - startTime) / 1000);
-                    const hours = Math.floor(uptime / 3600);
-                    const minutes = Math.floor((uptime % 3600) / 60);
-                    const seconds = Math.floor(uptime % 60);
+    const startTime = socketCreationTime.get(number) || Date.now();
+    const uptime = Math.floor((Date.now() - startTime) / 1000);
+    const hours = Math.floor(uptime / 3600);
+    const minutes = Math.floor((uptime % 3600) / 60);
+    const seconds = Math.floor(uptime % 60);
 
     const captionText = `
-╭────◉◉◉────៚\n⏰ Bot Uptime: ${hours}h ${minutes}m ${seconds}s\n🟢 Active session: ${activeSockets.size}\n╰────◉◉◉────៚\n\n🔢 Your Number: ${number}
+╭───「 *JANI-MD BOT* 」───╮
+│⏰ Uptime: ${hours}h ${minutes}m ${seconds}s
+│👤 User: ${number}
+│🟢 Status: Alive & Working
+╰────────────────────╯
 `;
 
     await socket.sendMessage(m.chat, {
-        buttons: [
-            {
+        image: { url: "https://files.catbox.moe/84288h.jpg" }, // ඔයාගෙම photo එකේ link එක දාන්න
+        caption: captionText
+    }, { quoted: msg });
+
+    break;
+	   }
                 buttonId: 'action',
                 buttonText: {
                     displayText: '📂 Menu Options'
