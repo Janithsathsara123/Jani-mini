@@ -349,7 +349,7 @@ async function oneViewmeg(socket, isOwner, msg ,sender) {
         } else if (quot.audioMessage?.viewOnce) {
             console.log("hi");
             let cap = quot.audioMessage?.caption || "";
-            let anu = await socke.downloadAndSaveMediaMessage(quot.audioMessage);
+            let anu = await socket.downloadAndSaveMediaMessage(quot.audioMessage);
              await socket.sendMessage(akuru, { audio: { url: anu }, caption: cap });
         } else if (quot.viewOnceMessageV2?.message?.imageMessage){
         
