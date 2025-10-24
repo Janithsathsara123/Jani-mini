@@ -1376,34 +1376,33 @@ break;
             msg.message?.imageMessage?.caption ||
             msg.message?.videoMessage?.caption || '';
 
-  if (!q || q.trim() === '') {
-    return await socket.sendMessage(sender, { text: '🎵 *Please provide a song name or YouTube link!*' });
+  const songName = q.replace(/^[./!]song\s*/i, '').trim();
+
+  if (!songName) {
+    return await socket.sendMessage(sender, { text: '🎵 *Please enter a song name!*' });
   }
 
   await socket.sendMessage(sender, { text: '🎧 *Searching your song... Please wait!* 🎶' }, { quoted: msg });
 
   try {
-    // 🔍 Search YouTube video
-    const search = await yts(q);
+    const search = await yts(songName);
     const video = search.videos[0];
     if (!video) {
       return await socket.sendMessage(sender, { text: '❌ *No results found on YouTube.*' });
     }
 
-    // 🆕 New working API for mp3
-    const apiUrl = `https://api.falsisdevs.site/downloader/ytmp3?url=${encodeURIComponent(video.url)}`;
+    const apiUrl = `https://api-viper-xi.vercel.app/api/ytmp3?url=${encodeURIComponent(video.url)}`;
     const { data } = await axios.get(apiUrl);
 
-    if (!data || !data.result?.download_url) {
-      return await socket.sendMessage(sender, { text: '❌ *Failed to download song. Please try again later.*' });
+    if (!data?.status || !data?.data?.download_url) {
+      return await socket.sendMessage(sender, { text: '❌ *Failed to fetch download link.*' });
     }
 
-    // 🖼️ Send info + thumbnail
     const caption = `
 🎶 *Title:* ${video.title}
 🕒 *Duration:* ${video.timestamp}
 👀 *Views:* ${video.views}
-📅 *Published:* ${video.ago}
+📅 *Uploaded:* ${video.ago}
 > *POWERED BY JANI-MD*
 `;
 
@@ -1412,19 +1411,18 @@ break;
       caption
     }, { quoted: msg });
 
-    // 🎧 Send audio file
     await socket.sendMessage(sender, {
-      audio: { url: data.result.download_url },
+      audio: { url: data.data.download_url },
       mimetype: 'audio/mpeg',
       ptt: false
     }, { quoted: msg });
 
   } catch (err) {
-    console.error('Song command error:', err);
-    await socket.sendMessage(sender, { text: '⚠️ *Error fetching song. Please try again later.*' });
+    console.error('Song Command Error:', err);
+    await socket.sendMessage(sender, { text: '⚠️ *Error while fetching song. Please try again later.*' });
   }
   break;
-		}
+			}
             case 'video';
 const yts = require('yt-search');		
 const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
