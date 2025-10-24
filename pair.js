@@ -1435,7 +1435,7 @@ if (!/youtu.be|youtube.com/.test(link)) { return await socket.sendMessage(sender
 try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wait...' }, { quoted: msg });
 
 // 🆕 New API (reliable one)
-  const apiUrl = `https://api.id.dexter.it.com/download/youtube/ytdl?link=${encodeURIComponent(link)}`;
+  const apiUrl = `https://www.youtube.com/watch?v=dB2GMQYTXGU/ytdown?link=${encodeURIComponent(link)}`;
   const { data } = await axios.get(apiUrl);
 
   if (!data || !data.result?.video) {
