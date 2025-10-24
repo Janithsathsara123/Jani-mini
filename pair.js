@@ -517,6 +517,7 @@ case 'alive': {
     break;
 }
                 },
+			{
                 type: 4,
                 nativeFlowInfo: {
                     name: 'single_select',
