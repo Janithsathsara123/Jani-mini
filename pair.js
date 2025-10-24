@@ -478,26 +478,23 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
 
     break;
 }
-       case 'alive': {
+case 'alive': {
     const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
     const hours = Math.floor(uptime / 3600);
     const minutes = Math.floor((uptime % 3600) / 60);
     const seconds = Math.floor(uptime % 60);
 
-    // Time zone settings
     const now = new Date();
     const date = now.toLocaleDateString('en-LK', { timeZone: 'Asia/Colombo' });
     const time = now.toLocaleTimeString('en-LK', { timeZone: 'Asia/Colombo' });
 
-    // Ping test
     const pingStart = Date.now();
-    await socket.sendPresenceUpdate('composing', m.chat);
+    await socket.sendPresenceUpdate('composing', sender);
     const ping = Date.now() - pingStart;
 
-    // Alive message
     const captionText = `
-╭─────❏ *JANI-MD ALIVE PANEL* ❏─────╮
+╭──────❏ *JANI-MD STATUS PANEL* ❏──────╮
 │
 │📅 *Date:* ${date}
 │⏰ *Time:* ${time}
@@ -511,13 +508,14 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
 ╰──────────────────────────────╯
 `;
 
-    await socket.sendMessage(m.chat, {
-        image: { url: "https://files.catbox.moe/84288h.jpg" }, // ← මෙතනට ඔයාගේ photo link එක දාන්න
-        caption: captionText
+    await socket.sendMessage(sender, {
+        image: { url: "https://files.catbox.moe/84288h.jpg" },
+        caption: captionText,
+        footer: 'JANI-MD BOT SYSTEM'
     }, { quoted: msg });
 
     break;
-	   }
+}
                 },
                 type: 4,
                 nativeFlowInfo: {
