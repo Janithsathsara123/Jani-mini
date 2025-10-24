@@ -495,7 +495,6 @@ case 'alive': {
 
     const captionText = `
 ╭──────❏ *JANI-MD STATUS PANEL* ❏──────╮
-│
 │📅 *Date:* ${date}
 │⏰ *Time:* ${time}
 │⚡ *Uptime:* ${hours}h ${minutes}m ${seconds}s
@@ -504,8 +503,8 @@ case 'alive': {
 │💠 *Owner:* JANI-MD TEAM
 │🧩 *Version:* 1.0.0
 │✅ *Status:* Bot is Alive & Working Fine!
-│
 ╰──────────────────────────────╯
+> *POWERED BY JANI-MD*
 `;
 
     await socket.sendMessage(sender, {
@@ -516,69 +515,31 @@ case 'alive': {
 
     break;
 }
-                },
-			{
-                type: 4,
-                nativeFlowInfo: {
-                    name: 'single_select',
-                    paramsJson: JSON.stringify({
-                        title: 'Click Here ❏',
-                        sections: [
-                            {
-                                title: `JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃`,
-                                highlight_label: '',
-                                rows: [
-                                    {
-                                        title: 'MENU 📌',
-                                        description: '𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳',
-                                        id: `${config.PREFIX}menu`,
-                                    },
-                                    {
-                                        title: 'ALIVE 📌',
-                                        description: '𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳',
-                                        id: `${config.PREFIX}alive`,
-                                    },
-                                ],
-                            },
-                        ],
-                    }),
-                },
-            },
-        ],
-        headerType: 1,
-        image: { url: "https://files.catbox.moe/84288h.jpg" },
-        caption: `JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 𝐀𝙻𝙸𝚅𝙴 𝐍𝙾𝚆\n\n${captionText}`,
-    }, { quoted: msg });
-    break;
-       }
-        case 'memu': {
-    const menuImage = "https://files.catbox.moe/84288h.jpg"; // ✅ correct image link
+
+case 'menu': {
+    const menuImage = "https://files.catbox.moe/84288h.jpg";
     const menuText = `
 ╭──────❏ *JANI-MD MINI BOT MENU* ❏──────╮
-│
-│⚙️ *Available Commands:*
-│
-│💠 ${config.PREFIX}alive - Check bot status
-│💠 ${config.PREFIX}song - Download songs
-│💠 ${config.PREFIX}video - Download YouTube videos
-│💠 ${config.PREFIX}tiktok - TikTok downloader
-│💠 ${config.PREFIX}fb - Facebook downloader
-│💠 ${config.PREFIX}ig - Instagram downloader
-│💠 ${config.PREFIX}aiimg - Generate AI image
-│💠 ${config.PREFIX}logo - Create logo styles
-│💠 ${config.PREFIX}fancy - Fancy text generator
-│💠 ${config.PREFIX}winfo - WhatsApp profile info
-│💠 ${config.PREFIX}ts - Search TikTok videos
-│💠 ${config.PREFIX}ai - Chat with JANI AI
-│💠 ${config.PREFIX}news - Latest local news
-│💠 ${config.PREFIX}gossip - Gossip Lanka news
-│💠 ${config.PREFIX}nasa - NASA space updates
-│💠 ${config.PREFIX}cricket - Live cricket news
-│💠 ${config.PREFIX}bomb - Send multiple messages
-│💠 ${config.PREFIX}deleteme - Delete your session
+│💠 *.alive* - Check bot status
+│💠 *.song* - Download YouTube songs
+│💠 *.video* - Download YouTube videos
+│💠 *.tiktok* - Download TikTok video
+│💠 *.fb* - Facebook video downloader
+│💠 *.ig* - Instagram downloader
+│💠 *.aiimg* - AI Image Generator
+│💠 *.logo* - Create logo styles
+│💠 *.fancy* - Fancy text generator
+│💠 *.ts* - Search TikTok videos
+│💠 *.ai* - Chat with JANI AI
+│💠 *.news* - Lanka news
+│💠 *.gossip* - Gossip Lanka
+│💠 *.nasa* - NASA space updates
+│💠 *.cricket* - Cricket news
+│💠 *.bomb* - Send multiple messages
+│💠 *.deleteme* - Delete session
 │
 ╰──────────────────────────────╯
-> *Powered By JANI-MD TEAM*
+> *POWERED BY JANI-MD TEAM*
 `;
 
     await socket.sendMessage(from, {
@@ -588,7 +549,7 @@ case 'alive': {
     }, { quoted: msg });
 
     break;
-		}
+}
                 case 'fc': {
                     if (args.length === 0) {
                         return await socket.sendMessage(sender, {
