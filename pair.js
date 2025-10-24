@@ -1367,7 +1367,6 @@ break;
                     }
                     break;
                 case 'song':
-				try	{
     const yts = require('yt-search');
     const axios = require('axios');
 
@@ -1425,10 +1424,8 @@ break;
     }
 
     break;
-					}
-            
-				case 'video': { const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
-
+            case 'video';
+const axios = require('axios'); const q = msg.message?.conversation || msg.message?.extendedTextMessage?.text || msg.message?.imageMessage?.caption || msg.message?.videoMessage?.caption || '';
 const link = q.replace(/^[./!]video\s*/i, '').trim();
 
 if (!link) { return await socket.sendMessage(sender, { text: '📌 Usage: .video <YouTube link>' }, { quoted: msg }); }
@@ -1438,7 +1435,7 @@ if (!/youtu.be|youtube.com/.test(link)) { return await socket.sendMessage(sender
 try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wait...' }, { quoted: msg });
 
 // 🆕 New API (reliable one)
-  const apiUrl = `https://zylalabs.com/api/3881/facebook+media+downloader+api/4582/download+reel+or+video/ytdl?link=${encodeURIComponent(link)}`;
+  const apiUrl = `https://api.id.dexter.it.com/download/youtube/ytdl?link=${encodeURIComponent(link)}`;
   const { data } = await axios.get(apiUrl);
 
   if (!data || !data.result?.video) {
@@ -1454,7 +1451,8 @@ try { await socket.sendMessage(sender, { text: '⏳ Downloading video, please wa
       caption
   }, { quoted: msg });
 
-} catch (err) { console.error("YouTube video command error:", err); await socket.sendMessage(sender, { text: ❌ Error: ${err.message} }, { quoted: msg }); }
+} catch (err) { console.error("YouTube video command error:", err); await socket.sendMessage(sender, { text: ❌ Error: ${err.message} }, { quoted: msg });	
+		0}
 
 break; }
     
