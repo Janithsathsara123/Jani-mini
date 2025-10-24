@@ -529,7 +529,7 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
     }, { quoted: msg });
     break;
 	}
-case 'alive': {
+    case 'alive': {
     const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
     const hours = Math.floor(uptime / 3600);
@@ -566,7 +566,6 @@ case 'alive': {
 
     break;
 }
-
 case 'menu': {
     const menuImage = "https://files.catbox.moe/84288h.jpg";
     const menuText = `
@@ -593,7 +592,8 @@ case 'menu': {
 > *POWERED BY JANI-MD TEAM*
 `;
 
-    await socket.sendMessage(from, {
+    await socket.sendMessage(sender, {
+		text:'send in .menu message'
         image: { url: menuImage },
         caption: menuText,
         footer: 'JANI-MD FREE BOT SYSTEM'
