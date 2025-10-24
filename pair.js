@@ -588,64 +588,6 @@ case 'alive': {
 
     break;
 		}
-        caption: `JANI-𝐌𝙳 𝐌𝙸𝙽𝙸 𝐁𝙾𝚃 𝐌𝙴𝙽𝚄 NOW\n\n*➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢
-┇ *\`${config.PREFIX}alive\`*
-┋ • Show bot status
-┋
-┋ *\`${config.PREFIX}Song\`*
-┋ • Download Songs
-┋
-┋ *\`${config.PREFIX}winfo\`*
-┋ • Get User Profile Picture
-┋
-┋ *\`${config.PREFIX}aiimg\`*
-┋ • Generate AI Image
-┋
-┋ *\`${config.PREFIX}logo\`*
-┋ • Create Logo
-┋
-┋ *\`${config.PREFIX}fancy\`*
-┋ • View Fancy Text
-┋
-┋ *\`${config.PREFIX}tiktok\`*
-┋ • Download TikTok video
-┋
-┋ *\`${config.PREFIX}fb\`*
-┋ • Download Facebook video
-┋
-┋ *\`${config.PREFIX}ig\`*
-┋ • Download Instagram video
-┋
-┋ *\`${config.PREFIX}ts\`*
-┋ • Search TikTok videos
-┋
-┋ *\`${config.PREFIX}ai\`*
-┋ • New AI Chat
-┋
-┋ *\`${config.PREFIX}news\`*
-┋ • View latest news update
-┋
-┋ *\`${config.PREFIX}nasa\`*
-┋ • View latest NASA news update
-┋
-┋ *\`${config.PREFIX}gossip\`*
-┋ • View gossip news update
-┋
-┋ *\`${config.PREFIX}cricket\`*
-┇ • Cricket news updates
-┇
-┇ *\`${config.PREFIX}bomb\`*
-┇ • Send Bomb Message
-┇
-┇ *\`${config.PREFIX}deleteme\`*
-┇ • Delete your session
-┗━━━━━━━━━━━ ◉◉➣`,
-        footer: 'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
-    });
-    break;
-				}
-                    break;
-		}
                 case 'fc': {
                     if (args.length === 0) {
                         return await socket.sendMessage(sender, {
