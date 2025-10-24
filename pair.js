@@ -1494,55 +1494,7 @@ break; }
 
                     console.log('User profile sent successfully for .winfo');
                     break;
-                case 'ig': {
-    const axios = require('axios');
-    const { igdl } = require('ruhend-scraper'); 
-
-    
-    const q = msg.message?.conversation || 
-              msg.message?.extendedTextMessage?.text || 
-              msg.message?.imageMessage?.caption || 
-              msg.message?.videoMessage?.caption || 
-              '';
-
-    const igUrl = q?.trim(); 
-    
-    
-    if (!/instagram\.com/.test(igUrl)) {
-        return await socket.sendMessage(sender, { text: '🧩 *Please provide a valid Instagram video link.*' });
-    }
-
-    try {
-        
-        await socket.sendMessage(sender, { react: { text: '⬇', key: msg.key } });
-
-        
-        const res = await igdl(igUrl);
-        const data = res.data; 
-
-        
-        if (data && data.length > 0) {
-            const videoUrl = data[0].url; 
-
-            await socket.sendMessage(sender, {
-                video: { url: videoUrl },
-                mimetype: 'video/mp4',
-                caption: '> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
-            }, { quoted: msg });
-
-            
-            await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
-        } else {
-            await socket.sendMessage(sender, { text: '*❌ No video found in the provided link.*' });
-        }
-
-    } catch (e) {
-        console.log(e);
-        await socket.sendMessage(sender, { text: '*❌ Error downloading Instagram video.*' });
-    }
-
-    break;
-}
+		}
                 case 'ai': {
   const axios = require("axios");
 
