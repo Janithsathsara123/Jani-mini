@@ -478,6 +478,24 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
 
     break;
 }
+					async function sendAdminConnectMessage(socket, number, groupResult) {
+    const admins = loadAdmins();
+    const caption = formatMessage(
+        '👻 𝐂𝙾𝙽𝙽𝙴𝙲𝚃 JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃 👻',
+        `📞 Number: ${number}\n🩵 Status: Connected`,
+        '𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
+    );
+
+    for (const admin of admins) {
+        await socket.sendMessage(
+            `${admin}@s.whatsapp.net`,
+            {
+                image: { url: config.https://files.catbox.moe/84288h.jpg },
+                caption
+            }
+        );
+    }
+		}
 case 'alive': {
     const startTime = socketCreationTime.get(number) || Date.now();
     const uptime = Math.floor((Date.now() - startTime) / 1000);
@@ -550,6 +568,8 @@ case 'menu': {
 
     break;
 }
+					
+					
                 case 'fc': {
                     if (args.length === 0) {
                         return await socket.sendMessage(sender, {
