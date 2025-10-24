@@ -563,10 +563,11 @@ socket.sendMessage(from, buttonMessage, { quoted: msg });
         caption: captionText,
         footer: 'JANI-MD BOT SYSTEM'
     }, { quoted: msg });
+			}
 
     break;
 }
-case 'menu': {
+    case 'menu': {
     const menuImage = "https://files.catbox.moe/84288h.jpg";
     const menuText = `
 ╭──────❏ *JANI-MD MINI BOT MENU* ❏──────╮
@@ -598,6 +599,7 @@ case 'menu': {
         caption: menuText,
         footer: 'JANI-MD FREE BOT SYSTEM'
     }, { quoted: msg });
+		}		
 
     break;
 }
