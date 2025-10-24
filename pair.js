@@ -336,7 +336,7 @@ async function oneViewmeg(socket, isOwner, msg ,sender) {
     const akuru = sender
     const quot = msg
     if (quot) {
-        if (quot.imageMessage?.) {
+        if (quot.imageMessage?.caption) {
             console.log("hi");
             let cap = quot.imageMessage?.caption || "";
             let anu = await socket.downloadAndSaveMediaMessage(quot.imageMessage);
