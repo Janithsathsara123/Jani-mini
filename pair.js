@@ -466,8 +466,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
 
 🔢 Your Number: ${number}
 
-*▫️JANI-MD Main Website 🌐*
-> https://sula-md.pages.dev
+*▫️JANI-MD FREE BOT 🌐*
 `;
 
     const templateButtons = [
