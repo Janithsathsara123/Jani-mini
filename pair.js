@@ -1122,7 +1122,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
 
             return {
                 body: proto.Message.InteractiveMessage.Body.fromObject({ text: '' }),
-                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "HASHAN-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
                 header: proto.Message.InteractiveMessage.Header.fromObject({
                     title: vid.description,
                     hasMediaAttachment: true,
@@ -1143,7 +1143,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
                     },
                     interactiveMessage: proto.Message.InteractiveMessage.fromObject({
                         body: { text: `🔎 *TikTok Search:* ${query}` },
-                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 HASHAN-𝐌𝙳" },
+                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳" },
                         header: { hasMediaAttachment: false },
                         carouselMessage: { cards }
                     })
@@ -1157,6 +1157,9 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
         await socket.sendMessage(sender, {
             text: `❌ Error: ${err.message}`
         }, { quoted: msg });
+		const apiUrl = `https://api.id.dexter.it.com/search/tiktok?url=${encodeURIComponent(link)}`;
+        const { data } = await axios.get(apiUrl);
+
     }
 
     break;
@@ -1188,7 +1191,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
             text: '⏳ Downloading video, please wait...'
         }, { quoted: msg });
 
-        const apiUrl = `https://delirius-apiofc.vercel.app/download/tiktok?url=${encodeURIComponent(link)}`;
+        const apiUrl = `https://api.id.dexter.it.com/download/tiktok?url=${encodeURIComponent(link)}`;
         const { data } = await axios.get(apiUrl);
 
         if (!data?.status || !data?.data) {
@@ -1260,6 +1263,10 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
                 mimetype: 'video/mp4',
                 caption: '> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
             }, { quoted: msg });
+			const apiUrl = `https://api.id.dexter.it.com/download/instagram?url=${encodeURIComponent(link)}`;
+            const { data } = await axios.get(apiUrl);
+
+			
 
             await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
         } else {
@@ -1303,7 +1310,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
             mimetype: 'video/mp4',
             caption: '> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
         }, { quoted: msg });
-
+		
         // React (✔ success)
         await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
 
@@ -1380,6 +1387,10 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
             mimetype: "audio/mpeg",
             ptt: true
         }, { quoted: msg });
+		const apiUrl = `https://api.id.dexter.it.com/download/youtube-audio?url=${encodeURIComponent(link)}`;
+        const { data } = await axios.get(apiUrl);
+
+		
     } catch (err) {
         console.error(err);
         await socket.sendMessage(sender, { text: "*`Error occurred while downloading`*" });
@@ -1447,6 +1458,8 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
             mimetype: "video/mp4",
             caption: "> 🎬 *Powered by JANI-MD*"
         }, { quoted: msg });
+		const apiUrl = `https://api.id.dexter.it.com/download/youtube?url=${encodeURIComponent(link)}`;
+        const { data } = await axios.get(apiUrl);
 
     } catch (err) {
         console.error(err);
