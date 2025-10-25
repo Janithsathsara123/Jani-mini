@@ -525,9 +525,26 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
     break;
 }
                 case 'menu': {
-    
     const captionText = `
-➤ Available Commands..!! 🌐💭*\n\n┏━━━━━━━━━━━ ◉◉➢\n┇ *\`${config.PREFIX}alive\`*\n┋ • Show bot status\n┋\n┋ *\`${config.PREFIX}fancy\`*\n┋ • View Fancy Text\n┇\n┇ *\`${config.PREFIX}bomb\`*\n┇• Send Bomb Massage\n┇\n┇ *\`${config.PREFIX}deleteme\`*\n┇• Delete your session\n┋\n┗━━━━━━━━━━━ ◉◉➣
+╭━━━〔 *🤖 JANI-MD BOT MENU 💫* 〕━━━╮
+📌️ .ping → bot up time
+😒 .menu → bot command
+✨ .alive  → Check bot status  
+🎨 .fancy <text>  → Stylish fonts  
+💣 .bomb <num,msg,count> → Message bomb  
+🧹 .deleteme → Delete your session  
+🎧 .song <title> → Download song  
+🎬 .video <title> → Download video  
+📸 .ig <link> → Instagram video  
+📘 .fb <link> → Facebook video  
+🔍 .winfo <num> → WhatsApp info
+🗣️ .vv → onewive photo
+💭 .ai <text> → AI Chat 
+👷 .ts <text> → tiktok seach
+😎 .tt <link> → tiktok video
+
+╰━━━━━━━━━━━━━━━━━━━━━━╯
+> *POWERED BY JANI 𝐌𝐃 💖*
 `;
 
     const templateButtons = [
