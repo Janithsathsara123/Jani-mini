@@ -828,6 +828,168 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
 
     break;
 } 
+					case 'winfo': {
+    console.log('winfo command triggered for:', number);
+
+    if (!args[0]) {
+        await socket.sendMessage(sender, {
+            image: { url: config.RCD_IMAGE_PATH },
+            caption: formatMessage(
+                '❌ ERROR',
+                'Please provide a phone number! Usage: .winfo +94xxxxxxxxx',
+                'JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
+            )
+        });
+        break;
+    }
+
+    let inputNumber = args[0].replace(/[^0-9]/g, '');
+    if (inputNumber.length < 10) {
+        await socket.sendMessage(sender, {
+            image: { url: config.RCD_IMAGE_PATH },
+            caption: formatMessage(
+                '❌ ERROR',
+                'Invalid phone number! Please include country code (e.g., +94712345678)',
+                '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
+            )
+        });
+        break;
+    }
+
+    let winfoJid = `${inputNumber}@s.whatsapp.net`;
+    const [winfoUser] = await socket.onWhatsApp(winfoJid).catch(() => []);
+    if (!winfoUser?.exists) {
+        await socket.sendMessage(sender, {
+            image: { url: config.RCD_IMAGE_PATH },
+            caption: formatMessage(
+                '❌ ERROR',
+                'User not found on WhatsApp',
+                '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
+            )
+        });
+        break;
+    }
+
+    let winfoPpUrl;
+    try {
+        winfoPpUrl = await socket.profilePictureUrl(winfoJid, 'image');
+    } catch {
+        winfoPpUrl = 'https://i.ibb.co/KhYC4FY/1221bc0bdd2354b42b293317ff2adbcf-icon.png';
+    }
+
+    let winfoName = winfoJid.split('@')[0];
+    try {
+        const presence = await socket.presenceSubscribe(winfoJid).catch(() => null);
+        if (presence?.pushName) winfoName = presence.pushName;
+    } catch (e) {
+        console.log('Name fetch error:', e);
+    }
+
+    let winfoBio = 'No bio available';
+    try {
+        const statusData = await socket.fetchStatus(winfoJid).catch(() => null);
+        if (statusData?.status) {
+            winfoBio = `${statusData.status}\n└─ 📌 Updated: ${statusData.setAt ? new Date(statusData.setAt).toLocaleString('en-US', { timeZone: 'Asia/Colombo' }) : 'Unknown'}`;
+        }
+    } catch (e) {
+        console.log('Bio fetch error:', e);
+    }
+
+    let winfoLastSeen = '❌ 𝐍𝙾𝚃 𝐅𝙾𝚄𝙽𝙳';
+    try {
+        const lastSeenData = await socket.fetchPresence(winfoJid).catch(() => null);
+        if (lastSeenData?.lastSeen) {
+            winfoLastSeen = `🕒 ${new Date(lastSeenData.lastSeen).toLocaleString('en-US', { timeZone: 'Asia/Colombo' })}`;
+        }
+    } catch (e) {
+        console.log('Last seen fetch error:', e);
+    }
+
+    const userInfoWinfo = formatMessage(
+        '🔍 PROFILE INFO',
+        `> *Number:* ${winfoJid.replace(/@.+/, '')}\n\n> *Account Type:* ${winfoUser.isBusiness ? '💼 Business' : '👤 Personal'}\n\n*📝 About:*\n${winfoBio}\n\n*🕒 Last Seen:* ${winfoLastSeen}`,
+        '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
+    );
+
+    await socket.sendMessage(sender, {
+        image: { url: winfoPpUrl },
+        caption: userInfoWinfo,
+        mentions: [winfoJid]
+    }, { quoted: msg });
+
+    console.log('User profile sent successfully for .winfo');
+    break;
+					}					
+								 
+					case 'viewonce':
+			     	case 'rvo':
+                    case 'vv': {
+    await socket.sendMessage(sender, { react: { text: '✨', key: msg.key } });
+
+    try {
+        if (!msg.quoted) 
+            return await socket.sendMessage(sender, { text: "🚩 *Please reply to a viewonce message* ⚠️" });
+
+        let quotedmsg = msg?.msg?.contextInfo?.quotedMessage;
+
+        // Function to process and resend view once media
+        async function oneViewmeg(socket, isOwner, msg, sender) {
+            if (isOwner) {  
+                try {
+                    const quot = msg;
+                    if (quot) {
+                        // View Once Image
+                        if (quot.imageMessage?.viewOnce) {
+                            let cap = quot.imageMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.imageMessage);
+                            await socket.sendMessage(sender, { image: { url: anu }, caption: cap });
+                        } 
+                        // View Once Video
+                        else if (quot.videoMessage?.viewOnce) {
+                            let cap = quot.videoMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.videoMessage);
+                            await socket.sendMessage(sender, { video: { url: anu }, caption: cap });
+                        } 
+                        // View Once Audio
+                        else if (quot.audioMessage?.viewOnce) {
+                            let cap = quot.audioMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.audioMessage);
+                            await socket.sendMessage(sender, { audio: { url: anu }, caption: cap });
+                        } 
+                        // V2 image
+                        else if (quot.viewOnceMessageV2?.message?.imageMessage) {
+                            let cap = quot.viewOnceMessageV2?.message?.imageMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.viewOnceMessageV2.message.imageMessage);
+                            await socket.sendMessage(sender, { image: { url: anu }, caption: cap });
+                        } 
+                        // V2 video
+                        else if (quot.viewOnceMessageV2?.message?.videoMessage) {
+                            let cap = quot.viewOnceMessageV2?.message?.videoMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.viewOnceMessageV2.message.videoMessage);
+                            await socket.sendMessage(sender, { video: { url: anu }, caption: cap });
+                        } 
+                        // V2 Extension audio
+                        else if (quot.viewOnceMessageV2Extension?.message?.audioMessage) {
+                            let cap = quot.viewOnceMessageV2Extension?.message?.audioMessage?.caption || "";
+                            let anu = await socket.downloadAndSaveMediaMessage(quot.viewOnceMessageV2Extension.message.audioMessage);
+                            await socket.sendMessage(sender, { audio: { url: anu }, caption: cap });
+                        }
+                    }        
+                } catch (error) {
+                    console.error('Error restoring view once message:', error);
+                }
+            }
+        }
+
+        // Call the function
+        await oneViewmeg(socket, isOwner, quotedmsg, sender);
+
+    } catch (e) {
+        console.log(e);
+        await socket.sendMessage(sender, { text: `❌ Error: ${e.message}` });
+    }
+    break;
+	}
     case 'bomb': {
     const isOwner = senderNumber === config.OWNER_NUMBER;
     const isBotUser = activeSockets.has(senderNumber);
@@ -869,7 +1031,414 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
 
     break;
 }
-                case 'ai': {
+					case 'ts': {
+    const axios = require('axios');
+
+    const q = msg.message?.conversation ||
+              msg.message?.extendedTextMessage?.text ||
+              msg.message?.imageMessage?.caption ||
+              msg.message?.videoMessage?.caption || '';
+
+    const query = q.replace(/^[.\/!]ts\s*/i, '').trim();
+
+    if (!query) {
+        return await socket.sendMessage(sender, {
+            text: '[❗] TikTok එකේ මොකද්ද බලන්න ඕනෙ කියපං! 🔍'
+        }, { quoted: msg });
+    }
+
+    async function tiktokSearch(query) {
+        try {
+            const searchParams = new URLSearchParams({
+                keywords: query,
+                count: '10',
+                cursor: '0',
+                HD: '1'
+            });
+
+            const response = await axios.post("https://tikwm.com/api/feed/search", searchParams, {
+                headers: {
+                    'Content-Type': "application/x-www-form-urlencoded; charset=UTF-8",
+                    'Cookie': "current_language=en",
+                    'User-Agent': "Mozilla/5.0"
+                }
+            });
+
+            const videos = response.data?.data?.videos;
+            if (!videos || videos.length === 0) {
+                return { status: false, result: "No videos found." };
+            }
+
+            return {
+                status: true,
+                result: videos.map(video => ({
+                    description: video.title || "No description",
+                    videoUrl: video.play || ""
+                }))
+            };
+        } catch (err) {
+            return { status: false, result: err.message };
+        }
+    }
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    try {
+        const searchResults = await tiktokSearch(query);
+        if (!searchResults.status) throw new Error(searchResults.result);
+
+        const results = searchResults.result;
+        shuffleArray(results);
+
+        const selected = results.slice(0, 6);
+
+        const cards = await Promise.all(selected.map(async (vid) => {
+            const videoBuffer = await axios.get(vid.videoUrl, { responseType: "arraybuffer" });
+
+            const media = await prepareWAMessageMedia({ video: videoBuffer.data }, {
+                upload: socket.waUploadToServer
+            });
+
+            return {
+                body: proto.Message.InteractiveMessage.Body.fromObject({ text: '' }),
+                footer: proto.Message.InteractiveMessage.Footer.fromObject({ text: "HASHAN-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃" }),
+                header: proto.Message.InteractiveMessage.Header.fromObject({
+                    title: vid.description,
+                    hasMediaAttachment: true,
+                    videoMessage: media.videoMessage // 🎥 Real video preview
+                }),
+                nativeFlowMessage: proto.Message.InteractiveMessage.NativeFlowMessage.fromObject({
+                    buttons: [] // ❌ No buttons
+                })
+            };
+        }));
+
+        const msgContent = generateWAMessageFromContent(sender, {
+            viewOnceMessage: {
+                message: {
+                    messageContextInfo: {
+                        deviceListMetadata: {},
+                        deviceListMetadataVersion: 2
+                    },
+                    interactiveMessage: proto.Message.InteractiveMessage.fromObject({
+                        body: { text: `🔎 *TikTok Search:* ${query}` },
+                        footer: { text: "> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 HASHAN-𝐌𝙳" },
+                        header: { hasMediaAttachment: false },
+                        carouselMessage: { cards }
+                    })
+                }
+            }
+        }, { quoted: msg });
+
+        await socket.relayMessage(sender, msgContent.message, { messageId: msgContent.key.id });
+
+    } catch (err) {
+        await socket.sendMessage(sender, {
+            text: `❌ Error: ${err.message}`
+        }, { quoted: msg });
+    }
+
+    break;
+	}
+					case 'tiktok': {
+    const axios = require('axios');
+
+    const q = msg.message?.conversation ||
+              msg.message?.extendedTextMessage?.text ||
+              msg.message?.imageMessage?.caption ||
+              msg.message?.videoMessage?.caption || '';
+
+    const link = q.replace(/^[.\/!]tiktok(dl)?|tt(dl)?\s*/i, '').trim();
+
+    if (!link) {
+        return await socket.sendMessage(sender, {
+            text: '📌 *Usage:* .tiktok <link>'
+        }, { quoted: msg });
+    }
+
+    if (!link.includes('tiktok.com')) {
+        return await socket.sendMessage(sender, {
+            text: '❌ *Invalid TikTok link.*'
+        }, { quoted: msg });
+    }
+
+    try {
+        await socket.sendMessage(sender, {
+            text: '⏳ Downloading video, please wait...'
+        }, { quoted: msg });
+
+        const apiUrl = `https://delirius-apiofc.vercel.app/download/tiktok?url=${encodeURIComponent(link)}`;
+        const { data } = await axios.get(apiUrl);
+
+        if (!data?.status || !data?.data) {
+            return await socket.sendMessage(sender, {
+                text: '❌ Failed to fetch TikTok video.'
+            }, { quoted: msg });
+        }
+
+        const { title, like, comment, share, author, meta } = data.data;
+        const video = meta.media.find(v => v.type === "video");
+
+        if (!video || !video.org) {
+            return await socket.sendMessage(sender, {
+                text: '❌ No downloadable video found.'
+            }, { quoted: msg });
+        }
+
+        const caption = `🎵 *TikTok Video*\n\n` +
+                        `👤 *User:* ${author.nickname} (@${author.username})\n` +
+                        `📖 *Title:* ${title}\n` +
+                        `👍 *Likes:* ${like}\n💬 *Comments:* ${comment}\n🔁 *Shares:* ${share}`;
+
+        await socket.sendMessage(sender, {
+            video: { url: video.org },
+            caption: caption,
+            contextInfo: { mentionedJid: [msg.key.participant || sender] }
+        }, { quoted: msg });
+
+    } catch (err) {
+        console.error("TikTok command error:", err);
+        await socket.sendMessage(sender, {
+            text: `❌ An error occurred:\n${err.message}`
+        }, { quoted: msg });
+    }
+
+    break;
+					}
+					case 'ig': {
+    const axios = require('axios');
+    const { igdl } = require('ruhend-scraper'); 
+
+    const q = msg.message?.conversation || 
+              msg.message?.extendedTextMessage?.text || 
+              msg.message?.imageMessage?.caption || 
+              msg.message?.videoMessage?.caption || 
+              '';
+
+    const igUrl = q?.trim(); 
+    
+    if (!/instagram\.com/.test(igUrl)) {
+        return await socket.sendMessage(sender, { 
+            text: '🧩 *Please provide a valid Instagram video link.*' 
+        });
+    }
+
+    try {
+        // React while downloading
+        await socket.sendMessage(sender, { react: { text: '⬇', key: msg.key } });
+
+        // Download video using ruhend-scraper API
+        const res = await igdl(igUrl);
+        const data = res.data; 
+
+        if (data && data.length > 0) {
+            const videoUrl = data[0].url; 
+
+            await socket.sendMessage(sender, {
+                video: { url: videoUrl },
+                mimetype: 'video/mp4',
+                caption: '> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
+            }, { quoted: msg });
+
+            await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
+        } else {
+            await socket.sendMessage(sender, { text: '*❌ No video found in the provided link.*' });
+        }
+
+    } catch (e) {
+        console.log(e);
+        await socket.sendMessage(sender, { text: '*❌ Error downloading Instagram video.*' });
+    }
+
+    break;
+					}
+					case 'fb': {
+    const axios = require('axios');
+    const q = msg.message?.conversation || 
+              msg.message?.extendedTextMessage?.text || 
+              msg.message?.imageMessage?.caption || 
+              msg.message?.videoMessage?.caption || 
+              '';
+
+    const fbUrl = q?.trim();
+
+    if (!/facebook\.com|fb\.watch/.test(fbUrl)) {
+        return await socket.sendMessage(sender, { 
+            text: '🧩 *Please provide a valid Facebook video link.*' 
+        });
+    }
+
+    try {
+        // Get video from Suhas API
+        const res = await axios.get(`https://suhas-bro-api.vercel.app/download/fbdown?url=${encodeURIComponent(fbUrl)}`);
+        const result = res.data.result;
+
+        // React (⬇ downloading)
+        await socket.sendMessage(sender, { react: { text: '⬇', key: msg.key } });
+
+        // Send downloaded video
+        await socket.sendMessage(sender, {
+            video: { url: result.sd },
+            mimetype: 'video/mp4',
+            caption: '> 𝐏𝙾𝚆𝙴𝚁𝙳 𝐁𝚈 JANI-𝐌𝙳'
+        }, { quoted: msg });
+
+        // React (✔ success)
+        await socket.sendMessage(sender, { react: { text: '✔', key: msg.key } });
+
+    } catch (e) {
+        console.log(e);
+        await socket.sendMessage(sender, { 
+            text: '*❌ Error downloading video.*' 
+        });
+    }
+
+    break;
+			}
+					case 'song': {
+    const yts = require('yt-search');
+    const ddownr = require('denethdev-ytmp3');
+
+    function extractYouTubeId(url) {
+        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    }
+
+    function convertYouTubeLink(input) {
+        const videoId = extractYouTubeId(input);
+        if (videoId) {
+            return `https://www.youtube.com/watch?v=${videoId}`;
+        }
+        return input;
+    }
+
+    const q = msg.message?.conversation || 
+              msg.message?.extendedTextMessage?.text || 
+              msg.message?.imageMessage?.caption || 
+              msg.message?.videoMessage?.caption || '';
+
+    if (!q || q.trim() === '') {
+        return await socket.sendMessage(sender, { text: '*`Need YT_URL or Title`*' });
+    }
+
+    const fixedQuery = convertYouTubeLink(q.trim());
+
+    try {
+        const search = await yts(fixedQuery);
+        const data = search.videos[0];
+        if (!data) {
+            return await socket.sendMessage(sender, { text: '*`No results found`*' });
+        }
+
+        const url = data.url;
+        const desc = `
+🎵 *𝚃𝚒𝚝𝚕𝚎:* \`${data.title}\`
+
+◆⏱️ *𝙳𝚞𝚛𝚊𝚝𝚒𝚘𝚗:* ${data.timestamp} 
+
+◆ *𝚅𝚒𝚎𝚠𝚜:* ${data.views}
+
+◆ 📅 *𝚁𝚎𝚕𝚎𝚊𝚜𝚎 𝙳𝚊𝚝𝚎:* ${data.ago}
+`;
+
+        await socket.sendMessage(sender, {
+            image: { url: data.thumbnail },
+            caption: desc,
+        }, { quoted: msg });
+
+        await socket.sendMessage(sender, { react: { text: '⬇️', key: msg.key } });
+
+        const result = await ddownr.download(url, 'mp3');
+        const downloadLink = result.downloadUrl;
+
+        await socket.sendMessage(sender, { react: { text: '⬆️', key: msg.key } });
+
+        await socket.sendMessage(sender, {
+            audio: { url: downloadLink },
+            mimetype: "audio/mpeg",
+            ptt: true
+        }, { quoted: msg });
+    } catch (err) {
+        console.error(err);
+        await socket.sendMessage(sender, { text: "*`Error occurred while downloading`*" });
+    }
+    break;
+		}
+					case 'video': {
+    const yts = require('yt-search');
+    const ddownr = require('denethdev-ytmp4');
+
+    function extractYouTubeId(url) {
+        const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = url.match(regex);
+        return match ? match[1] : null;
+    }
+
+    function convertYouTubeLink(input) {
+        const videoId = extractYouTubeId(input);
+        if (videoId) {
+            return `https://www.youtube.com/watch?v=${videoId}`;
+        }
+        return input;
+    }
+
+    const q = msg.message?.conversation || 
+              msg.message?.extendedTextMessage?.text || 
+              msg.message?.imageMessage?.caption || 
+              msg.message?.videoMessage?.caption || '';
+
+    if (!q || q.trim() === '') {
+        return await socket.sendMessage(sender, { text: '*`Need YouTube URL or Video Title`*' });
+    }
+
+    const fixedQuery = convertYouTubeLink(q.trim());
+
+    try {
+        const search = await yts(fixedQuery);
+        const data = search.videos[0];
+        if (!data) {
+            return await socket.sendMessage(sender, { text: '*`No results found`*' });
+        }
+
+        const url = data.url;
+        const desc = `
+🎬 *Title:* \`${data.title}\`
+⏱️ *Duration:* ${data.timestamp}
+👁️ *Views:* ${data.views}
+📅 *Uploaded:* ${data.ago}
+`;
+
+        await socket.sendMessage(sender, {
+            image: { url: data.thumbnail },
+            caption: desc,
+        }, { quoted: msg });
+
+        await socket.sendMessage(sender, { react: { text: '⬇️', key: msg.key } });
+
+        const result = await ddownr.download(url, 'mp4');
+        const downloadLink = result.downloadUrl;
+
+        await socket.sendMessage(sender, { react: { text: '⬆️', key: msg.key } });
+
+        await socket.sendMessage(sender, {
+            video: { url: downloadLink },
+            mimetype: "video/mp4",
+            caption: "> 🎬 *Powered by JANI-MD*"
+        }, { quoted: msg });
+
+    } catch (err) {
+        console.error(err);
+        await socket.sendMessage(sender, { text: "*❌ Error occurred while downloading video.*" });
+    }
+    break;
+	}
+		            case 'ai': {
                     const axios = require("axios");
 
                     const GEMINI_API_KEY = 'AIzaSyDKG2kbHCfenwjiFhQCk-m3EXFotzmrrW4';// 𝚊𝚙𝚒 𝚔𝚎𝚢 එකක් අරන් දාන්න https://aistudio.google.com/app/apikey මේ website එකෙන් ගන්න
