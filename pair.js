@@ -865,7 +865,7 @@ socket.downloadAndSaveMediaMessage = async(message, filename, attachExtension = 
             image: { url: config.RCD_IMAGE_PATH },
             caption: formatMessage(
                 '❌ ERROR',
-                'Invalid phone number! Please include country code (e.g., +94712345678)',
+                'Invalid phone number! Please include country code (e.g., +94761427943)',
                 '> JANI-𝐌𝙳 𝐅𝚁𝙴𝙴 𝐁𝙾𝚃'
             )
         });
