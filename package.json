@@ -8,11 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "baileys": "^7.0.0-rc.2",
+    "@dark-yasiya/baileys": "1.0.7",
     "express": "^4.18.2",
     "fs-extra": "^11.2.0",
     "pino": "^8.17.0",
-    "jimp": "^0.16.1",
+    "jimp": "^0.22.12",
     "@octokit/rest": "^20.0.2",
     "child_process": "^1.0.2",
     "denethdev-ytmp3":"1.0.3",
